@@ -1,0 +1,148 @@
+[gd_scene load_steps=18 format=3 uid="uid://cvm32qrncwvj3"]
+
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_qvaeg"]
+[ext_resource type="Resource" uid="uid://ivgfdch4tfr3" path="res://resources/StatsPlayer.tres" id="2_vaqgg"]
+[ext_resource type="Texture2D" uid="uid://ch10vs6w845cc" path="res://Aseprite/Output/player.png" id="3_8bthk"]
+[ext_resource type="Script" path="res://scripts/MovementComponent.gd" id="4_yprdr"]
+[ext_resource type="Script" path="res://scripts/states/StateMachine.gd" id="5_5o65l"]
+[ext_resource type="Script" path="res://scripts/states/player/StatePlayerGrounded.gd" id="6_obda2"]
+[ext_resource type="Script" path="res://scripts/states/player/StatePlayerMidair.gd" id="7_j8m7d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dat33"]
+size = Vector2(13, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3s7e8"]
+atlas = ExtResource("3_8bthk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_maa57"]
+atlas = ExtResource("3_8bthk")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgprx"]
+atlas = ExtResource("3_8bthk")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tbly"]
+atlas = ExtResource("3_8bthk")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8skf"]
+atlas = ExtResource("3_8bthk")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oi5r4"]
+atlas = ExtResource("3_8bthk")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h5ub"]
+atlas = ExtResource("3_8bthk")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oqmqw"]
+atlas = ExtResource("3_8bthk")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uvgfc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3s7e8")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_maa57")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgprx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tbly")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i8skf")
+}],
+"loop": false,
+"name": &"jump_land",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i8skf")
+}],
+"loop": false,
+"name": &"jump_start",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oi5r4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h5ub")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oqmqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3s7e8")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "state_machine", "sprite")]
+safe_margin = 0.16
+script = ExtResource("1_qvaeg")
+movement_component = NodePath("MovementComponent")
+state_machine = NodePath("StateMachine")
+sprite = NodePath("AnimatedSprite2D")
+stats = ExtResource("2_vaqgg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7.5)
+shape = SubResource("RectangleShape2D_dat33")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_uvgfc")
+animation = &"jump"
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://Aseprite/Output",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://Aseprite/player.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": false,
+"output_section": true,
+"slice_section": false
+}
+
+[node name="MovementComponent" type="Node" parent="."]
+script = ExtResource("4_yprdr")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("state_owner", "initial_state")]
+script = ExtResource("5_5o65l")
+state_owner = NodePath("..")
+initial_state = NodePath("Grounded")
+
+[node name="Grounded" type="Node" parent="StateMachine"]
+script = ExtResource("6_obda2")
+
+[node name="Midair" type="Node" parent="StateMachine"]
+script = ExtResource("7_j8m7d")
