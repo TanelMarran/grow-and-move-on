@@ -16,4 +16,4 @@ func update_point(line: Line2D, index: int, growth: Vector2) -> void:
 
 func add_point(line: Line2D, index1: int, index2: int) -> void:
 	if should_spawn_new_point(line.points[index1], line.points[index2]):
-			line.add_point(line.points[index1], index2)
+		line.add_point(line.points[index1], index2)

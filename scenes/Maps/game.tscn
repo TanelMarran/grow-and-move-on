@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=4 uid="uid://cwdqwx5paa31k"]
+[gd_scene load_steps=17 format=4 uid="uid://cwdqwx5paa31k"]
 
 [ext_resource type="PackedScene" uid="uid://cvm32qrncwvj3" path="res://scenes/Player.tscn" id="1_q68dq"]
 [ext_resource type="Texture2D" uid="uid://dq8bubbl7hy30" path="res://tilesets/ground.png" id="2_ayryw"]
 [ext_resource type="Script" path="res://scripts/Stem.gd" id="3_dlm3y"]
 [ext_resource type="Script" path="res://scripts/resources/GrowerAngle.gd" id="4_et32p"]
+[ext_resource type="PackedScene" uid="uid://cktbri6i1m5d" path="res://scenes/Platform.tscn" id="5_o7x4b"]
+[ext_resource type="Texture2D" uid="uid://nl0a5qduug0w" path="res://aseprite/Output/waterdrop.png" id="6_56hjj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_66hwt"]
 texture = ExtResource("2_ayryw")
@@ -26,8 +28,8 @@ point_count = 2
 
 [sub_resource type="Resource" id="Resource_pt2gu"]
 script = ExtResource("4_et32p")
-rot_frequency = 30.0
-rot_frequency_variance = 5.0
+rot_frequency = 60.0
+rot_frequency_variance = 20.0
 dir_min = 315.0
 dir_max = 225.0
 rot_amount = 90.0
@@ -35,12 +37,57 @@ rot_amount_variance = 0.0
 growth_speed = 50.0
 point_frequency = 16.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcnn3"]
+atlas = ExtResource("6_56hjj")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wj7t8"]
+atlas = ExtResource("6_56hjj")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ovud6"]
+atlas = ExtResource("6_56hjj")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gf6pc"]
+atlas = ExtResource("6_56hjj")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2aroc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vcnn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wj7t8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ovud6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gf6pc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rtsc8"]
+radius = 5.0
+
 [node name="World" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -112)
-
 [node name="Player" parent="." instance=ExtResource("1_q68dq")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+limit_left = -200
+limit_right = 200
+limit_bottom = 80
+limit_smoothed = true
+drag_vertical_enabled = true
+editor_draw_limits = true
+editor_draw_drag_margin = true
 
 [node name="Floor" type="Node2D" parent="."]
 
@@ -50,13 +97,38 @@ tile_set = SubResource("TileSet_pckk4")
 
 [node name="Stem" type="Line2D" parent="."]
 z_index = -1
-position = Vector2(24, -24)
-points = PackedVector2Array(8, 32, 8, 24)
+position = Vector2(24, -32)
+points = PackedVector2Array(8, 32, 8, 31)
 width = 24.0
 width_curve = SubResource("Curve_73lir")
 default_color = Color(0.0941176, 0.533333, 0.509804, 1)
 joint_mode = 1
 end_cap_mode = 2
 script = ExtResource("3_dlm3y")
-growth_left = null
 grower = SubResource("Resource_pt2gu")
+platform_scene = ExtResource("5_o7x4b")
+platform_distance_max = Vector2(70, 33)
+
+[node name="Waterdrop" type="CharacterBody2D" parent="."]
+position = Vector2(52, -20)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Waterdrop"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_2aroc")
+animation = &"idle"
+autoplay = "idle"
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://aseprite/Output",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://aseprite/waterdrop.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Waterdrop"]
+shape = SubResource("CircleShape2D_rtsc8")

@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://cktbri6i1m5d"]
+
+[ext_resource type="Script" path="res://scripts/Platform.gd" id="1_5kqt3"]
+[ext_resource type="Texture2D" uid="uid://ceu2gthg62kp3" path="res://aseprite/Output/leaves.png" id="2_f7wxn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_32pap"]
+size = Vector2(18, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xs3jq"]
+atlas = ExtResource("2_f7wxn")
+region = Rect2(0, 0, 29, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uv1w4"]
+atlas = ExtResource("2_f7wxn")
+region = Rect2(29, 0, 29, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orb8n"]
+atlas = ExtResource("2_f7wxn")
+region = Rect2(0, 18, 29, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x86xa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xs3jq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uv1w4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_orb8n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Platform" type="AnimatableBody2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_5kqt3")
+sprite = NodePath("AnimatedSprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_32pap")
+one_way_collision = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_x86xa")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://aseprite/Output",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://aseprite/leaves.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}

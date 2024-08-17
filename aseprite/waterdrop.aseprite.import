@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://jwptfogtbjde"
+path="res://.godot/imported/waterdrop.aseprite-ac38bc9daaa20f7fb4d25b94a67c8b59.res"
+
+[deps]
+
+source_file="res://aseprite/waterdrop.aseprite"
+dest_files=["res://.godot/imported/waterdrop.aseprite-ac38bc9daaa20f7fb4d25b94a67c8b59.res"]
+
+[params]
+

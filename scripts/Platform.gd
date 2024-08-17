@@ -1,13 +1,11 @@
-extends Node
+extends AnimatableBody2D
 
-const RESTITUTION_GROUND: float = 300.0
-const GRAVITY: float = 10.0
-const GRAVITY_MAX: float = 80.0
+@export var sprite: AnimatedSprite2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
+	if sprite:
+		sprite.frame = randi_range(0, sprite.sprite_frames.get_frame_count("default") - 1)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
