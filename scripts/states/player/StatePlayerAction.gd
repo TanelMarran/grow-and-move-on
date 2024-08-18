@@ -1,5 +1,7 @@
 class_name StatePlayerAction extends State
 
+@export var little_jump: bool = true
+
 var so: Player:
 	get:
 		if !so:
@@ -22,10 +24,12 @@ func state_enter() -> void:
 		direction = ToolAnchor.Direction.DOWN if down_input else ToolAnchor.Direction.UP
 	
 	so.tool_anchor.direction = direction
-	so.tool_anchor.sprite.flip_v = is_facing_left
+	if so.tool_anchor.tool_sprite:
+		so.tool_anchor.tool_sprite.flip_v = is_facing_left
 	so.sprite.flip_h = is_facing_left
 	so.tool_anchor.visible = true
-	so.movement_component.vector.y = min(-so.stats.jump_power * .5, so.movement_component.vector.y)
+	if little_jump:
+		so.movement_component.vector.y = min(-so.stats.jump_power * .5, so.movement_component.vector.y)
 	
 	get_tree().create_timer(.3).timeout.connect(func():
 		goto_state("Grounded" if so.is_on_floor() else "Midair")
@@ -47,9 +51,6 @@ func state_physics_update(_delta: float) -> void:
 	animations()
 	
 	so.regulate_jump()
-	
-	if so.is_on_floor():
-		goto_state("Grounded")
 
 func animations() -> void:
 	so.sprite.animation = "use"

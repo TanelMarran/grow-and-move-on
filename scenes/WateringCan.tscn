@@ -1,0 +1,96 @@
+[gd_scene load_steps=15 format=3 uid="uid://cglse52u304q5"]
+
+[ext_resource type="Script" path="res://scripts/Tool.gd" id="1_wwgfk"]
+[ext_resource type="Texture2D" uid="uid://c0l1013e2kxvr" path="res://scenes/Maps/tools.png" id="2_w4a6o"]
+[ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="3_iyufo"]
+[ext_resource type="Script" path="res://scripts/PickupArea.gd" id="4_yv3dn"]
+[ext_resource type="Script" path="res://scripts/MovementComponent.gd" id="5_c3pep"]
+[ext_resource type="Script" path="res://scripts/states/player/StatePlayerActionWater.gd" id="6_5alqq"]
+[ext_resource type="Script" path="res://scripts/states/StateMachine.gd" id="7_om6ax"]
+[ext_resource type="PackedScene" uid="uid://c6602e3qsscm1" path="res://scenes/waterdrop.tscn" id="7_poha8"]
+[ext_resource type="Script" path="res://scripts/states/StateToolIdle.gd" id="8_i7wa3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6v25c"]
+atlas = ExtResource("2_w4a6o")
+region = Rect2(0, 0, 20, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_757uf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6v25c")
+}],
+"loop": true,
+"name": &"watering can",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ecx0"]
+size = Vector2(14, 15)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yeap7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bi8ga"]
+radius = 7.07107
+
+[node name="WateringCan" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "pickup_area", "sprite", "movement_component", "action_state")]
+collision_layer = 0
+script = ExtResource("1_wwgfk")
+state_machine = NodePath("StateMachine")
+pickup_area = NodePath("PickupArea2D")
+sprite = NodePath("AnimatedSprite2D")
+movement_component = NodePath("MovementComponent")
+action_state = NodePath("Action")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_757uf")
+animation = &"watering can"
+script = ExtResource("3_iyufo")
+is_floating = true
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://aseprite/tools.aseprite"
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_6ecx0")
+
+[node name="WaterableArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterableArea2D"]
+visible = false
+shape = SubResource("CircleShape2D_yeap7")
+debug_color = Color(0.791553, 0.880184, 0.939642, 0.42)
+
+[node name="PickupArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("4_yv3dn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea2D"]
+visible = false
+shape = SubResource("CircleShape2D_bi8ga")
+debug_color = Color(0.756143, 0.416034, 0.498673, 0.42)
+
+[node name="MovementComponent" type="Node" parent="."]
+script = ExtResource("5_c3pep")
+
+[node name="Action" type="Node" parent="."]
+script = ExtResource("6_5alqq")
+waterdrop_scene = ExtResource("7_poha8")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("state_owner", "initial_state")]
+script = ExtResource("7_om6ax")
+state_owner = NodePath("..")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("8_i7wa3")

@@ -7,18 +7,25 @@ var so: Player:
 		return so
 
 var animation_frame_speed_threshold = 10
+var coyote_time: float = .1
+var coyote_timer: float = 0
 
 func get_state_owner() -> Variant:
 	return state_owner
 	
 func state_enter() -> void:
 	so.movement_component.acceleration_factor = .8
+	if previous_state == "Grounded":
+		coyote_timer = coyote_time
 	
 func state_exit() -> void:
 	so.movement_component.acceleration_factor = 1
 	
 func state_update(_delta: float) -> void:
+	if coyote_timer > 0:
+		coyote_timer -= _delta
 	so.tool_action()
+	so.pickup_action()
 	
 func state_physics_update(_delta: float) -> void:
 	var movement_input: float = (1 if Input.is_action_pressed("Move Right") else 0) - (1 if Input.is_action_pressed("Move Left") else 0)
@@ -28,6 +35,9 @@ func state_physics_update(_delta: float) -> void:
 	so.movement_component.accelerate(_delta)
 	so.movement_component.move_and_slide()
 	animations()
+	
+	if coyote_timer > 0 && Input.is_action_just_pressed("Jump") && !so.is_jumping:
+		so.jump()
 	
 	so.regulate_jump()
 	

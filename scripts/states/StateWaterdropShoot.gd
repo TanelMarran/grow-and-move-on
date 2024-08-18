@@ -40,6 +40,7 @@ func state_physics_update(_delta: float) -> void:
 		if player_in.position.y > so.position.y:
 			player_in.move_and_collide(Vector2(0, so.position.y - player_in.position.y))
 			player_in.jump()
+			player_in.move_and_slide()
 			goto_state("Fall")
 	
 	so.movement_component.accelerate(_delta)

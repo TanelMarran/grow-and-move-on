@@ -1,16 +1,14 @@
-[gd_scene load_steps=28 format=3 uid="uid://cvm32qrncwvj3"]
+[gd_scene load_steps=24 format=3 uid="uid://cvm32qrncwvj3"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qvaeg"]
 [ext_resource type="Resource" uid="uid://ivgfdch4tfr3" path="res://resources/StatsPlayer.tres" id="2_vaqgg"]
 [ext_resource type="PackedScene" uid="uid://c6602e3qsscm1" path="res://scenes/waterdrop.tscn" id="3_msi0m"]
-[ext_resource type="Texture2D" uid="uid://6c23rpm3ahn0" path="res://aseprite/Output/tools.png" id="4_huo07"]
-[ext_resource type="Texture2D" uid="uid://ch10vs6w845cc" path="res://Aseprite/Output/player.png" id="4_ogie6"]
+[ext_resource type="Texture2D" uid="uid://ch10vs6w845cc" path="res://aseprite/Output/player.png" id="4_ogie6"]
 [ext_resource type="Script" path="res://scenes/ToolAnchor.gd" id="4_wx4u1"]
 [ext_resource type="Script" path="res://scripts/MovementComponent.gd" id="4_yprdr"]
 [ext_resource type="Script" path="res://scripts/states/StateMachine.gd" id="5_5o65l"]
 [ext_resource type="Script" path="res://scripts/states/player/StatePlayerGrounded.gd" id="6_obda2"]
 [ext_resource type="Script" path="res://scripts/states/player/StatePlayerMidair.gd" id="7_j8m7d"]
-[ext_resource type="Script" path="res://scripts/states/player/StatePlayerActionWater.gd" id="11_56kso"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dat33"]
 size = Vector2(13, 15)
@@ -135,21 +133,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xntrn"]
-atlas = ExtResource("4_huo07")
-region = Rect2(0, 0, 20, 12)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_qtlgl"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xntrn")
-}],
-"loop": true,
-"name": &"watering can",
-"speed": 10.0
-}]
-
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "tool_anchor", "state_machine", "sprite")]
 collision_layer = 2
 safe_margin = 0.16
@@ -185,29 +168,10 @@ metadata/_aseprite_wizard_interface_config_ = {
 "slice_section": false
 }
 
-[node name="ToolAnchor" type="Node2D" parent="." node_paths=PackedStringArray("sprite")]
+[node name="ToolAnchor" type="Node2D" parent="."]
 visible = false
 position = Vector2(0, -8)
 script = ExtResource("4_wx4u1")
-sprite = NodePath("AnimatedSprite2D")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ToolAnchor"]
-texture_filter = 1
-position = Vector2(18, 0)
-sprite_frames = SubResource("SpriteFrames_qtlgl")
-animation = &"watering can"
-metadata/_aseprite_wizard_config_ = {
-"layer": "",
-"o_ex_p": "",
-"o_folder": "res://aseprite/Output",
-"o_name": "",
-"only_visible": false,
-"slice": "",
-"source": "res://aseprite/tools.aseprite"
-}
-metadata/_aseprite_wizard_interface_config_ = {
-"output_section": true
-}
 
 [node name="MovementComponent" type="Node" parent="."]
 script = ExtResource("4_yprdr")
@@ -222,7 +186,3 @@ script = ExtResource("6_obda2")
 
 [node name="Midair" type="Node" parent="StateMachine"]
 script = ExtResource("7_j8m7d")
-
-[node name="Action" type="Node" parent="StateMachine"]
-script = ExtResource("11_56kso")
-waterdrop_scene = ExtResource("3_msi0m")

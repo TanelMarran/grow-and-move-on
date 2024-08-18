@@ -1,0 +1,127 @@
+[gd_scene load_steps=18 format=3 uid="uid://tkpbi3ln3fcp"]
+
+[ext_resource type="Script" path="res://scripts/Seed.gd" id="1_3g0n5"]
+[ext_resource type="Texture2D" uid="uid://bt6fwew8qgr5l" path="res://scenes/Maps/blue_flower.png" id="1_8bivr"]
+[ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="3_88c3m"]
+[ext_resource type="Script" path="res://scripts/PickupArea.gd" id="3_h21q6"]
+[ext_resource type="Script" path="res://scripts/MovementComponent.gd" id="4_kydxe"]
+[ext_resource type="Script" path="res://scripts/states/StateMachine.gd" id="4_s0thu"]
+[ext_resource type="Script" path="res://scripts/states/StateSeedBulb.gd" id="6_7rit2"]
+[ext_resource type="Script" path="res://scripts/states/player/StatePlayerActionPlant.gd" id="6_dwdjd"]
+[ext_resource type="Script" path="res://scripts/states/StateSeedFlower.gd" id="7_p1ucj"]
+[ext_resource type="Script" path="res://scripts/states/StateSeedIdle.gd" id="8_1re11"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ddapj"]
+atlas = ExtResource("1_8bivr")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqxuu"]
+atlas = ExtResource("1_8bivr")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h07d1"]
+atlas = ExtResource("1_8bivr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lwggl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddapj")
+}],
+"loop": true,
+"name": &"bulb",
+"speed": 1000.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqxuu")
+}],
+"loop": true,
+"name": &"flower",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h07d1")
+}],
+"loop": true,
+"name": &"seed",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ecx0"]
+size = Vector2(14, 15)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yeap7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bi8ga"]
+radius = 7.07107
+
+[node name="BlueFlower" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "pickup_area", "sprite", "movement_component", "action_state")]
+collision_layer = 0
+script = ExtResource("1_3g0n5")
+state_machine = NodePath("StateMachine")
+pickup_area = NodePath("PickupArea2D")
+sprite = NodePath("AnimatedSprite2D")
+movement_component = NodePath("MovementComponent")
+action_state = NodePath("Action")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_lwggl")
+animation = &"seed"
+script = ExtResource("3_88c3m")
+is_floating = true
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://aseprite/blue_flower.aseprite"
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_6ecx0")
+
+[node name="WaterableArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterableArea2D"]
+visible = false
+shape = SubResource("CircleShape2D_yeap7")
+debug_color = Color(0.791553, 0.880184, 0.939642, 0.42)
+
+[node name="PickupArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("3_h21q6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea2D"]
+visible = false
+shape = SubResource("CircleShape2D_bi8ga")
+debug_color = Color(0.756143, 0.416034, 0.498673, 0.42)
+
+[node name="MovementComponent" type="Node" parent="."]
+script = ExtResource("4_kydxe")
+
+[node name="Action" type="Node" parent="."]
+script = ExtResource("6_dwdjd")
+little_jump = false
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("state_owner", "initial_state")]
+script = ExtResource("4_s0thu")
+state_owner = NodePath("..")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("8_1re11")
+
+[node name="Bulb" type="Node" parent="StateMachine"]
+script = ExtResource("6_7rit2")
+
+[node name="Flower" type="Node" parent="StateMachine"]
+script = ExtResource("7_p1ucj")

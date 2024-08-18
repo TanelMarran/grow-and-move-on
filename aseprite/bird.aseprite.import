@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://3wfl5d82alar"
+path="res://.godot/imported/bird.aseprite-141c4c654428dab846baa541f1687c9e.res"
+
+[deps]
+
+source_file="res://aseprite/bird.aseprite"
+dest_files=["res://.godot/imported/bird.aseprite-141c4c654428dab846baa541f1687c9e.res"]
+
+[params]
+

@@ -2,7 +2,7 @@ class_name State extends Node
 
 var state_owner: Variant
 var state_machine: StateMachine
-var last_state: String
+var previous_state: String
 
 signal transitioned_to
 signal return_to_last

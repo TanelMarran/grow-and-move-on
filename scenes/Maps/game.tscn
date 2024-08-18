@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=4 uid="uid://cwdqwx5paa31k"]
+[gd_scene load_steps=8 format=4 uid="uid://cwdqwx5paa31k"]
 
 [ext_resource type="PackedScene" uid="uid://cvm32qrncwvj3" path="res://scenes/Player.tscn" id="1_q68dq"]
 [ext_resource type="Texture2D" uid="uid://dq8bubbl7hy30" path="res://tilesets/ground.png" id="2_ayryw"]
 [ext_resource type="PackedScene" uid="uid://diddw061dtm3m" path="res://scenes/StemMain.tscn" id="3_uqrue"]
+[ext_resource type="PackedScene" uid="uid://tkpbi3ln3fcp" path="res://scenes/BlueFlower.tscn" id="4_l13gs"]
+[ext_resource type="PackedScene" uid="uid://cglse52u304q5" path="res://scenes/WateringCan.tscn" id="5_vxjys"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_66hwt"]
 texture = ExtResource("2_ayryw")
@@ -40,3 +42,9 @@ tile_map_data = PackedByteArray("AAD//wAAAAACAAAAAAD+/wAAAAACAAAAAAD9/wAAAAACAAA
 tile_set = SubResource("TileSet_pckk4")
 
 [node name="Stem" parent="." instance=ExtResource("3_uqrue")]
+
+[node name="BlueFlower" parent="." instance=ExtResource("4_l13gs")]
+position = Vector2(-105, -78)
+
+[node name="WateringCan" parent="." instance=ExtResource("5_vxjys")]
+position = Vector2(-3, -64)

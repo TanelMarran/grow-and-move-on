@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://cr3c0kpqorkpn" path="res://resources/StatsWaterdrop.tres" id="2_6nbvs"]
 [ext_resource type="Script" path="res://scripts/MovementComponent.gd" id="3_hr0pr"]
 [ext_resource type="Script" path="res://scripts/states/StateMachine.gd" id="3_rxi0k"]
-[ext_resource type="Script" path="res://scripts/states/StateWaterdropFall.gd" id="4_s544t"]
+[ext_resource type="Script" path="res://scripts/states/StateToolFall.gd" id="4_s544t"]
 [ext_resource type="Script" path="res://scripts/states/StateWaterdropShoot.gd" id="5_aog2e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2t20x"]
