@@ -53,17 +53,7 @@ func _physics_process(delta) -> void:
 
 func accelerate(delta: float) -> void:
 	approach_target_vector(target_vector, (delta * acceleration if !target_vector.is_equal_approx(Vector2.ZERO) else 0))
-	approach_target_vector(Vector2.ZERO, delta * restitution)
-
-## @deprecated
-func activate(acceleration_value: float = -1.0, restitution_value: float = -1.0) -> void:
-	active = true
-	acceleration = acceleration if acceleration_value == -1.0 else acceleration_value
-	restitution = restitution if restitution_value == -1.0 else restitution_value
-
-## @deprecated
-func deactivate() -> void:
-	active = false
+	approach_target_vector(Vector2(0, vector.y) if is_sidescroller else Vector2.ZERO, delta * restitution)
 
 func set_target_vector(value: Vector2, max: float = value.length(), min: float = value.length()) -> void:
 	var smallest_length: float = min(max, value.length())
@@ -100,3 +90,6 @@ func move_to(position: Vector2, speed: float) -> void:
 	is_move_to_active = true
 	move_to_target = position
 	move_to_speed = speed
+
+func apply_gravity(_delta: float) -> void:
+	vector.y = min(vector.y + Global.GRAVITY * _delta, Global.GRAVITY_MAX)

@@ -1,8 +1,10 @@
-extends Node
+class_name Waterdrop extends CharacterBody2D
 
-const RESTITUTION_GROUND: float = 300.0
-const GRAVITY: float = 590.0
-const GRAVITY_MAX: float = 120.0
+@export var state_machine: StateMachine
+@export var stats: StatsWaterdrop
+@export var movement_component: MovementComponent
+@export var bounce_area: Area2D
+@export var reclaim_area: Area2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

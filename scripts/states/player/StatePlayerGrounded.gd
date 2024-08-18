@@ -21,7 +21,7 @@ func state_physics_update(_delta: float) -> void:
 	so.movement_component.vector.y = 0
 	
 	if Input.is_action_just_pressed("Jump"):
-		so.movement_component.vector.y = -so.stats.jump_power
+		so.jump()
 	
 	so.movement_component.accelerate(_delta)
 	so.movement_component.move_and_slide()

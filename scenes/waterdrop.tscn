@@ -1,0 +1,122 @@
+[gd_scene load_steps=16 format=3 uid="uid://c6602e3qsscm1"]
+
+[ext_resource type="Script" path="res://scripts/Waterdrop.gd" id="1_3fpc7"]
+[ext_resource type="Texture2D" uid="uid://nl0a5qduug0w" path="res://aseprite/Output/waterdrop.png" id="1_kxqcx"]
+[ext_resource type="Resource" uid="uid://cr3c0kpqorkpn" path="res://resources/StatsWaterdrop.tres" id="2_6nbvs"]
+[ext_resource type="Script" path="res://scripts/MovementComponent.gd" id="3_hr0pr"]
+[ext_resource type="Script" path="res://scripts/states/StateMachine.gd" id="3_rxi0k"]
+[ext_resource type="Script" path="res://scripts/states/StateWaterdropFall.gd" id="4_s544t"]
+[ext_resource type="Script" path="res://scripts/states/StateWaterdropShoot.gd" id="5_aog2e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2t20x"]
+atlas = ExtResource("1_kxqcx")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lyfbw"]
+atlas = ExtResource("1_kxqcx")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_btubl"]
+atlas = ExtResource("1_kxqcx")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mw2bd"]
+atlas = ExtResource("1_kxqcx")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rc7on"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2t20x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lyfbw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_btubl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mw2bd")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pars4"]
+radius = 6.08276
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lux4o"]
+radius = 4.0
+height = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rtsc8"]
+radius = 4.0
+
+[node name="Waterdrop" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "movement_component", "bounce_area", "reclaim_area")]
+collision_layer = 0
+script = ExtResource("1_3fpc7")
+state_machine = NodePath("StateMachine")
+stats = ExtResource("2_6nbvs")
+movement_component = NodePath("MovementComponent")
+bounce_area = NodePath("BounceArea2D")
+reclaim_area = NodePath("BounceArea2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_rc7on")
+animation = &"idle"
+autoplay = "idle"
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://aseprite/Output",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://aseprite/waterdrop.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+
+[node name="ReclaimArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReclaimArea2D"]
+rotation = -1.57079
+shape = SubResource("CircleShape2D_pars4")
+debug_color = Color(0.87566, 0.573088, 0, 0.42)
+
+[node name="BounceArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BounceArea2D"]
+position = Vector2(0, -4)
+rotation = -1.57079
+shape = SubResource("CapsuleShape2D_lux4o")
+debug_color = Color(0.346328, 0.60551, 0.388938, 0.42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rtsc8")
+
+[node name="MovementComponent" type="Node" parent="."]
+script = ExtResource("3_hr0pr")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("state_owner", "initial_state")]
+script = ExtResource("3_rxi0k")
+state_owner = NodePath("..")
+initial_state = NodePath("Fall")
+
+[node name="Fall" type="Node" parent="StateMachine"]
+script = ExtResource("4_s544t")
+
+[node name="Shoot" type="Node" parent="StateMachine"]
+script = ExtResource("5_aog2e")

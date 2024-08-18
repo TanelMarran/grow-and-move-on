@@ -11,9 +11,13 @@ func should_spawn_new_point(point1: Vector2, point2: Vector2) -> bool:
 func get_growth(delta: float) -> Vector2:
 	return Vector2.UP * delta * growth_speed
 
-func update_point(line: Line2D, index: int, growth: Vector2) -> void:
-	line.points[index] += growth
+func update_point(stem: Stem, index: int, growth: Vector2) -> void:
+	stem.points[index] += growth
+	stem.line_shapes[index].b += growth
 
-func add_point(line: Line2D, index1: int, index2: int) -> void:
-	if should_spawn_new_point(line.points[index1], line.points[index2]):
-		line.add_point(line.points[index1], index2)
+func add_point(stem: Stem, index1: int, index2: int) -> void:
+	var a: Vector2 = stem.points[index2]
+	var b: Vector2 = stem.points[index1]
+	if should_spawn_new_point(a, b):
+		stem.add_point(b, index2)
+		stem.add_new_shape(b)

@@ -6,29 +6,29 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32pap"]
 size = Vector2(18, 5)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xs3jq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_eergl"]
 atlas = ExtResource("2_f7wxn")
 region = Rect2(0, 0, 29, 18)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uv1w4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qc05"]
 atlas = ExtResource("2_f7wxn")
 region = Rect2(29, 0, 29, 18)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_orb8n"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2okur"]
 atlas = ExtResource("2_f7wxn")
 region = Rect2(0, 18, 29, 18)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_x86xa"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_exnm1"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xs3jq")
+"texture": SubResource("AtlasTexture_eergl")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uv1w4")
+"texture": SubResource("AtlasTexture_3qc05")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_orb8n")
+"texture": SubResource("AtlasTexture_2okur")
 }],
 "loop": true,
 "name": &"default",
@@ -47,7 +47,7 @@ one_way_collision = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_x86xa")
+sprite_frames = SubResource("SpriteFrames_exnm1")
 metadata/_aseprite_wizard_config_ = {
 "layer": "",
 "o_ex_p": "",

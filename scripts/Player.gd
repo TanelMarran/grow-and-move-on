@@ -5,11 +5,13 @@ class_name Player extends CharacterBody2D
 @export var state_machine: StateMachine
 @export var sprite: AnimatedSprite2D
 @export var stats: StatsPlayer
+@export var waterdrop_scene: PackedScene
+
+var is_jumping: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	movement_component.acceleration = stats.acceleration
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -18,3 +20,15 @@ func _process(delta: float) -> void:
 func tool_action() -> void:
 	if Input.is_action_just_pressed("Action"):
 		state_machine.goto_state("Action")
+
+func jump() -> void:
+	movement_component.vector.y = -stats.jump_power
+	is_jumping = true
+
+func regulate_jump() -> void:
+	if is_jumping && movement_component.vector.y > 0:
+		is_jumping = false
+	
+	if is_jumping && !Input.is_action_pressed("Jump"):
+		is_jumping = false
+		movement_component.vector.y *= .5

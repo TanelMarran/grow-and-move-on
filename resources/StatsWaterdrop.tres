@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="StatsWaterdrop" load_steps=2 format=3 uid="uid://cr3c0kpqorkpn"]
+
+[ext_resource type="Script" path="res://scripts/resources/StatsWaterdrop.gd" id="1_p6m2q"]
+
+[resource]
+script = ExtResource("1_p6m2q")
+shoot_speed = 150.0
+shoot_restitution = 500.0
+float_time = 3.0

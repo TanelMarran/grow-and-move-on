@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_j3r4i")
 movement_speed = 100.0
-jump_power = 250.0
+jump_power = 210.0
 acceleration = 1000.0

@@ -25,9 +25,9 @@ func state_enter() -> void:
 	so.tool_anchor.sprite.flip_v = is_facing_left
 	so.sprite.flip_h = is_facing_left
 	so.tool_anchor.visible = true
-	so.movement_component.vector.y = -so.stats.jump_power * .5
+	so.movement_component.vector.y = min(-so.stats.jump_power * .5, so.movement_component.vector.y)
 	
-	get_tree().create_timer(.2).timeout.connect(func():
+	get_tree().create_timer(.3).timeout.connect(func():
 		goto_state("Grounded" if so.is_on_floor() else "Midair")
 	, CONNECT_ONE_SHOT)
 
@@ -40,11 +40,13 @@ func state_update(_delta: float) -> void:
 func state_physics_update(_delta: float) -> void:
 	var movement_input: float = (1 if Input.is_action_pressed("Move Right") else 0) - (1 if Input.is_action_pressed("Move Left") else 0)
 	so.movement_component.target_vector.x = movement_input * so.stats.movement_speed
-	so.movement_component.vector.y = so.movement_component.vector.y + Global.GRAVITY
+	so.movement_component.apply_gravity(_delta)
 	
 	so.movement_component.accelerate(_delta)
 	so.movement_component.move_and_slide()
 	animations()
+	
+	so.regulate_jump()
 	
 	if so.is_on_floor():
 		goto_state("Grounded")
