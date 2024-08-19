@@ -45,3 +45,8 @@ func regulate_jump() -> void:
 
 func pickup(node: Node2D, sprite: AnimatedSprite2D, dropped_callback: Callable, distance: float = 18) -> void:
 	tool_anchor.pickup(node, sprite, dropped_callback, distance)
+
+func drop_camera() -> void:
+	var camera: Camera2D = get_node("Camera2D") as Camera2D
+	if camera:
+		camera.reparent(get_tree().root.get_node("World"))

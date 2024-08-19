@@ -1,7 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://sc7uuyaxbapl"]
+[gd_scene load_steps=17 format=3 uid="uid://sc7uuyaxbapl"]
 
 [ext_resource type="Texture2D" uid="uid://cmtly3hvl2xn5" path="res://scenes/goal.png" id="1_a58el"]
+[ext_resource type="Script" path="res://scripts/Goal.gd" id="1_bm477"]
 [ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="2_xkkgk"]
+[ext_resource type="Script" path="res://scripts/states/StateMachine.gd" id="4_u46g4"]
+[ext_resource type="Script" path="res://scenes/StateGoalIdle.gd" id="6_caiid"]
+[ext_resource type="Script" path="res://scripts/MovementComponent.gd" id="6_tawan"]
+[ext_resource type="Script" path="res://scenes/StateGoalConfirmation.gd" id="7_tsuqs"]
+[ext_resource type="Script" path="res://scenes/StateGoalFly.gd" id="8_2pii3"]
+[ext_resource type="Curve2D" uid="uid://bwgecdu3hera4" path="res://resources/FlightPath.tres" id="9_b40eo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n1li0"]
 atlas = ExtResource("1_a58el")
@@ -40,14 +47,29 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_whq6y"]
-radius = 14.0357
 
-[node name="Goal" type="Area2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4a07"]
+size = Vector2(21, 17)
+
+[node name="Goal" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "state_machine", "sprite", "goal_area", "player_joint_right", "player_joint_left")]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_bm477")
+movement_component = NodePath("MovementComponent")
+state_machine = NodePath("StateMachine")
+sprite = NodePath("EntitySprite2D")
+goal_area = NodePath("Area2D")
+player_joint_right = NodePath("JointRight")
+player_joint_left = NodePath("JointLeft")
+jump_strength = 150.0
+flight_path = ExtResource("9_b40eo")
 
 [node name="EntitySprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+position = Vector2(-1, -1)
 sprite_frames = SubResource("SpriteFrames_kd0c0")
 autoplay = "default"
+frame_progress = 0.297751
 script = ExtResource("2_xkkgk")
 is_floating = true
 metadata/_aseprite_wizard_config_ = {
@@ -62,3 +84,36 @@ metadata/_aseprite_wizard_config_ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_whq6y")
+
+[node name="MovementComponent" type="Node" parent="."]
+script = ExtResource("6_tawan")
+is_sidescroller = false
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("state_owner", "initial_state")]
+script = ExtResource("4_u46g4")
+state_owner = NodePath("..")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("6_caiid")
+
+[node name="Confirmation" type="Node" parent="StateMachine"]
+script = ExtResource("7_tsuqs")
+
+[node name="Fly" type="Node" parent="StateMachine"]
+script = ExtResource("8_2pii3")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 1.5)
+shape = SubResource("RectangleShape2D_j4a07")
+debug_color = Color(0.931922, 0.857244, 0.186556, 0.42)
+
+[node name="JointRight" type="Node2D" parent="."]
+position = Vector2(16, 9)
+
+[node name="JointLeft" type="Node2D" parent="."]
+position = Vector2(-16, 9)

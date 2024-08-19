@@ -7,9 +7,7 @@ const GRAVITY_MAX: float = 120.0
 var interactable: Array[PickupArea] = []
 var valid_interactables: Array[PickupArea] = []
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+@onready var user_interface: UserInterface = get_tree().current_scene.get_node("/root/World/CanvasLayer")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
