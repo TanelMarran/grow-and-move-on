@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://bsxi0ycvs6w7m"]
+[gd_scene load_steps=11 format=3 uid="uid://bsxi0ycvs6w7m"]
 
 [ext_resource type="FontFile" uid="uid://dchevw1g7o7jv" path="res://fonts/Ubuntu-Title.ttf" id="1_1bb38"]
 [ext_resource type="Script" path="res://scripts/UserInterface.gd" id="1_01vnn"]
 [ext_resource type="Material" uid="uid://lgs6pvk8mvfc" path="res://resources/materials/UI_Text.tres" id="1_osarl"]
+[ext_resource type="Texture2D" uid="uid://cw226ev7chgkf" path="res://aseprite/ui_water.png" id="3_mn5pi"]
 [ext_resource type="LabelSettings" uid="uid://c3vnxitekgjkl" path="res://resources/Text_Button.tres" id="3_qnxo3"]
+[ext_resource type="Script" path="res://scenes/ResourceBar.gd" id="3_vohxc"]
+[ext_resource type="Texture2D" uid="uid://c8ggv0yre1s14" path="res://aseprite/ui_water_empty.png" id="4_1h6fr"]
 [ext_resource type="LabelSettings" uid="uid://v23p8xmfwjf8" path="res://resources/Text_Small.tres" id="4_3g0an"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_06njd"]
@@ -25,9 +28,10 @@ corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 anti_aliasing = false
 
-[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("game_end_prompt")]
+[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("game_end_prompt", "water_bar")]
 script = ExtResource("1_01vnn")
 game_end_prompt = NodePath("MarginContainer/Game End Prompt")
+water_bar = NodePath("MarginContainer/Info/WaterBar")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 material = ExtResource("1_osarl")
@@ -40,6 +44,29 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
+
+[node name="Info" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="WaterBar" type="HBoxContainer" parent="MarginContainer/Info"]
+layout_mode = 2
+script = ExtResource("3_vohxc")
+filled = ExtResource("3_mn5pi")
+empty = ExtResource("4_1h6fr")
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Info/WaterBar"]
+layout_mode = 2
+texture = ExtResource("4_1h6fr")
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/Info/WaterBar"]
+layout_mode = 2
+texture = ExtResource("4_1h6fr")
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/Info/WaterBar"]
+layout_mode = 2
+texture = ExtResource("4_1h6fr")
 
 [node name="Game End Prompt" type="VBoxContainer" parent="MarginContainer"]
 use_parent_material = true

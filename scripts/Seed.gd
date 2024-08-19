@@ -7,10 +7,13 @@ class_name Seed extends CharacterBody2D
 @export var sprite: EntitySprite2D
 @export var movement_component: MovementComponent
 @export var action_state: State
+@export var start_as_bulb: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pickup_area.picked_up.connect(picked_up)
+	if start_as_bulb:
+		state_machine.goto_state("Bulb")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

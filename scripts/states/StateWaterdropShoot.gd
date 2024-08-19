@@ -17,7 +17,7 @@ func get_state_owner() -> Variant:
 func state_enter() -> void:
 	fall_time = so.stats.float_time
 	saved_mask = so.collision_mask
-	so.collision_mask = 0
+	so.collision_mask = so.shoot_mask
 	so.bounce_area.monitoring = true
 	so.movement_component.is_sidescroller = false
 	player_in = null
@@ -46,6 +46,9 @@ func state_physics_update(_delta: float) -> void:
 			player_in.jump()
 			player_in.move_and_slide()
 			goto_state("Fall")
+	
+	if so.is_on_floor():
+		goto_state("Grounded")
 	
 	so.movement_component.accelerate(_delta)
 	so.movement_component.move_and_slide()

@@ -28,6 +28,8 @@ func state_enter() -> void:
 	is_flying = false
 	so.movement_component.set_movement_factors(.7)
 	baked_length = so.flight_path.get_baked_length()
+	so.movement_component.vector.x = 0
+	follower.progress = 0
 	
 func state_exit() -> void:
 	pass
@@ -40,10 +42,9 @@ func state_physics_update(_delta: float) -> void:
 		_wait_timer -= _delta
 		if _wait_timer <= 0:
 			is_flying = true
-			# so.player.drop_camera()
 	if is_flying:
-		so.movement_component.target_vector.x = 250
-		follower.progress = min(baked_length, follower.progress + so.movement_component.vector.x * _delta)
+		so.movement_component.target_vector.x = 200
+		follower.progress = max(0, min(so.flight_path.get_baked_length(), follower.progress + so.movement_component.vector.x * _delta))
 	animations()
 	so.movement_component.accelerate(_delta)
 

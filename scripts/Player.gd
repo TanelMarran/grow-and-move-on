@@ -6,11 +6,17 @@ class_name Player extends CharacterBody2D
 @export var sprite: AnimatedSprite2D
 @export var stats: StatsPlayer
 @export var waterdrop_scene: PackedScene
+@export_range(0, 3, 1) var water_amount: int = 0
+
+const WATER_MAX: int = 3
 
 var is_jumping: bool = false
 var current_pickup: Node2D
 
 signal tool_dropped
+
+signal water_reclaimed
+signal water_used
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -50,3 +56,11 @@ func drop_camera() -> void:
 	var camera: Camera2D = get_node("Camera2D") as Camera2D
 	if camera:
 		camera.reparent(get_tree().root.get_node("World"))
+
+func reclaim_water() -> void:
+	water_amount += 1
+	water_reclaimed.emit()
+
+func use_water() -> void:
+	water_amount -= 1
+	water_used.emit()

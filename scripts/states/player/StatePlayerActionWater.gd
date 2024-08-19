@@ -3,8 +3,12 @@ extends StatePlayerAction
 @export var waterdrop_scene: PackedScene
 	
 func state_enter() -> void:
+	little_jump = so.water_amount > 0
+	
 	super()
-	spawn_water()
+	if so.water_amount > 0:
+		so.use_water()
+		spawn_water()
 
 func state_exit() -> void:
 	super()

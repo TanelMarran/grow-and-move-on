@@ -1,43 +1,78 @@
-[gd_scene load_steps=16 format=3 uid="uid://c6602e3qsscm1"]
+[gd_scene load_steps=22 format=3 uid="uid://c6602e3qsscm1"]
 
 [ext_resource type="Script" path="res://scripts/Waterdrop.gd" id="1_3fpc7"]
 [ext_resource type="Texture2D" uid="uid://nl0a5qduug0w" path="res://aseprite/Output/waterdrop.png" id="1_kxqcx"]
 [ext_resource type="Resource" uid="uid://cr3c0kpqorkpn" path="res://resources/StatsWaterdrop.tres" id="2_6nbvs"]
 [ext_resource type="Script" path="res://scripts/MovementComponent.gd" id="3_hr0pr"]
 [ext_resource type="Script" path="res://scripts/states/StateMachine.gd" id="3_rxi0k"]
+[ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="4_6hxtq"]
 [ext_resource type="Script" path="res://scripts/states/StateToolFall.gd" id="4_s544t"]
 [ext_resource type="Script" path="res://scripts/states/StateWaterdropShoot.gd" id="5_aog2e"]
+[ext_resource type="Script" path="res://scripts/states/StateWaterdropGrounded.gd" id="8_hpf65"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2t20x"]
-atlas = ExtResource("1_kxqcx")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lyfbw"]
-atlas = ExtResource("1_kxqcx")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_btubl"]
-atlas = ExtResource("1_kxqcx")
-region = Rect2(0, 16, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mw2bd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8fir"]
 atlas = ExtResource("1_kxqcx")
 region = Rect2(16, 16, 16, 16)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_rc7on"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnpop"]
+atlas = ExtResource("1_kxqcx")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clh82"]
+atlas = ExtResource("1_kxqcx")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjev5"]
+atlas = ExtResource("1_kxqcx")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vcgi"]
+atlas = ExtResource("1_kxqcx")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10ec4"]
+atlas = ExtResource("1_kxqcx")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkju6"]
+atlas = ExtResource("1_kxqcx")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gs7eg"]
+atlas = ExtResource("1_kxqcx")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_308hj"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2t20x")
+"texture": SubResource("AtlasTexture_b8fir")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lyfbw")
+"texture": SubResource("AtlasTexture_hnpop")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_btubl")
+"texture": SubResource("AtlasTexture_clh82")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mw2bd")
+"texture": SubResource("AtlasTexture_mjev5")
+}],
+"loop": true,
+"name": &"grounded",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6vcgi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10ec4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkju6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gs7eg")
 }],
 "loop": true,
 "name": &"idle",
@@ -45,7 +80,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pars4"]
-radius = 6.08276
+radius = 9.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lux4o"]
 radius = 4.0
@@ -54,21 +89,24 @@ height = 14.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtsc8"]
 radius = 4.0
 
-[node name="Waterdrop" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "movement_component", "bounce_area", "reclaim_area")]
+[node name="Waterdrop" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "sprite", "movement_component", "bounce_area", "reclaim_area")]
 z_index = 3
 collision_layer = 4
 script = ExtResource("1_3fpc7")
 state_machine = NodePath("StateMachine")
+sprite = NodePath("AnimatedSprite2D")
 stats = ExtResource("2_6nbvs")
 movement_component = NodePath("MovementComponent")
 bounce_area = NodePath("BounceArea2D")
-reclaim_area = NodePath("BounceArea2D")
+reclaim_area = NodePath("ReclaimArea2D")
+shoot_mask = 256
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_rc7on")
-animation = &"idle"
+sprite_frames = SubResource("SpriteFrames_308hj")
+animation = &"grounded"
 autoplay = "idle"
+script = ExtResource("4_6hxtq")
 metadata/_aseprite_wizard_config_ = {
 "layer": "",
 "o_ex_p": "",
@@ -85,8 +123,6 @@ metadata/_aseprite_wizard_interface_config_ = {
 [node name="ReclaimArea2D" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
-monitoring = false
-monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ReclaimArea2D"]
 rotation = -1.57079
@@ -118,6 +154,9 @@ initial_state = NodePath("Fall")
 
 [node name="Fall" type="Node" parent="StateMachine"]
 script = ExtResource("4_s544t")
+
+[node name="Grounded" type="Node" parent="StateMachine"]
+script = ExtResource("8_hpf65")
 
 [node name="Shoot" type="Node" parent="StateMachine"]
 script = ExtResource("5_aog2e")

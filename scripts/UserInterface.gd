@@ -1,6 +1,7 @@
 class_name UserInterface extends CanvasLayer
 
 @export var game_end_prompt: Control
+@export var water_bar: ResourceBar
 var _game_end_prompt_visible: bool = false
 var _game_end_prompt_tween: Tween
 var _game_end_propt_home_pos: Vector2

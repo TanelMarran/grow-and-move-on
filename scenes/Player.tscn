@@ -192,7 +192,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "tool_anchor", "state_machine", "sprite")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "tool_anchor", "state_machine", "sprite") groups=["Player"]]
 z_index = 1
 collision_layer = 2
 safe_margin = 0.16
@@ -203,6 +203,7 @@ state_machine = NodePath("StateMachine")
 sprite = NodePath("AnimatedSprite2D")
 stats = ExtResource("2_vaqgg")
 waterdrop_scene = ExtResource("3_msi0m")
+water_amount = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7.5)
