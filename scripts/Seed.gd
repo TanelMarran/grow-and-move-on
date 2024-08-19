@@ -2,6 +2,8 @@ class_name Seed extends CharacterBody2D
 
 @export var state_machine: StateMachine
 @export var pickup_area: PickupArea
+@export var plant_area: Area2D
+@export var waterable_area: Area2D
 @export var sprite: EntitySprite2D
 @export var movement_component: MovementComponent
 @export var action_state: State

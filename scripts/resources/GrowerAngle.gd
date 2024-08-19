@@ -12,26 +12,36 @@ class_name GrowerRightAngle extends Grower
 @export var rot_amount: float = 90
 @export var rot_amount_variance: float = 0
 
-var current_direction: float = deg_to_rad((dir_max + dir_min) / 2)
 var growth_left_til_direction_change: float = get_random_next_rotation_time()
 
 func get_random_next_rotation_time() -> float:
 	return rot_frequency + randf_range(-1, 1) * rot_frequency_variance
 
+func get_rotation_addition(direction: int) -> float:
+	return deg_to_rad(direction * rot_amount + rot_amount_variance * randf_range(-1, 1))
+
 func get_random_rotation_addition() -> float:
-	return deg_to_rad([-1, 1].pick_random() * rot_amount + rot_amount_variance * randf_range(-1, 1))
+	return get_rotation_addition([-1, 1].pick_random())
 
 func get_growth(delta: float) -> Vector2:
-	return Vector2.from_angle(current_direction) * delta * growth_speed
+	return Vector2.from_angle(direction) * delta * growth_speed
 
-func update_point(line: Line2D, index: int, growth: Vector2) -> void:
+func update_point(stem: Stem, index: int, growth: Vector2) -> void:
 	growth_left_til_direction_change -= growth.length()
+	var avoidance_position = stem.get_average_avoidance_point()
 	
-	if growth_left_til_direction_change < 0:
-		var new_direction = current_direction + get_random_rotation_addition()
-		while (angle_difference(new_direction, deg_to_rad(dir_max)) > 0 && angle_difference(new_direction, deg_to_rad(dir_min)) < 0):
-			new_direction = current_direction + get_random_rotation_addition()
-		current_direction = new_direction
+	if avoidance_position:
+		var angle_to_avoidance: float = angle_difference(direction, Vector2.RIGHT.angle_to(avoidance_position - (stem.global_position + stem.points[-1])))
+		var direction_of_rotation: int = [-1, 1].pick_random() if sign(angle_to_avoidance) == 0 else sign(angle_to_avoidance)
+		var new_direction: float = direction + get_rotation_addition(direction_of_rotation)
+		direction = new_direction
 		growth_left_til_direction_change = get_random_next_rotation_time()
 	
-	super(line, index, growth)
+	if growth_left_til_direction_change < 0:
+		var new_direction = direction + get_random_rotation_addition()
+		while (angle_difference(new_direction, deg_to_rad(dir_max)) > 0 && angle_difference(new_direction, deg_to_rad(dir_min)) < 0):
+			new_direction = direction + get_random_rotation_addition()
+		direction = new_direction
+		growth_left_til_direction_change = get_random_next_rotation_time()
+	
+	super(stem, index, growth)

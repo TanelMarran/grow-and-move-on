@@ -36,11 +36,19 @@ func add_state(state: State) -> void:
 func remove_state(state: State) -> void:
 	var state_name = state.name.to_lower()
 	
-	states.erase(state_name)
-	state.state_owner = null
-	state.state_machine = null
-	state.transitioned_to.disconnect(on_state_transition)
-	state.return_to_last.disconnect(on_state_return_to_last)
+	var remove_state_internal: Callable = func():
+		states.erase(state_name)
+		state.state_owner = null
+		state.state_machine = null
+		state.transitioned_to.disconnect(on_state_transition)
+		state.return_to_last.disconnect(on_state_return_to_last)
+	
+	if current_state == state:
+		current_state.transitioned_to.connect(func(state: State, new_state_name: String):
+			remove_state_internal.call()
+		, CONNECT_ONE_SHOT)
+	else:
+		remove_state_internal.call()
 	
 func _process(delta: float) -> void:
 	if current_state && active:

@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://c3vnxitekgjkl"]
+
+[ext_resource type="FontFile" uid="uid://dchevw1g7o7jv" path="res://fonts/Ubuntu-Title.ttf" id="1_w75wc"]
+
+[resource]
+font = ExtResource("1_w75wc")
+font_color = Color(0.129412, 0.235294, 0.447059, 1)
+shadow_size = 0

@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://lgs6pvk8mvfc"]
+
+[ext_resource type="Shader" path="res://shaders/Text.gdshader" id="1_wdtyv"]
+
+[sub_resource type="Gradient" id="Gradient_w8bly"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.821429)
+colors = PackedColorArray(0.129412, 0.235294, 0.447059, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wwobp"]
+gradient = SubResource("Gradient_w8bly")
+
+[resource]
+shader = ExtResource("1_wdtyv")
+shader_parameter/alpha_step = 0.315
+shader_parameter/gradient = SubResource("GradientTexture1D_wwobp")

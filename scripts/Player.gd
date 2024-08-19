@@ -15,7 +15,6 @@ signal tool_dropped
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	movement_component.acceleration = stats.acceleration
-	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -32,7 +31,7 @@ func pickup_action() -> void:
 		elif tool_anchor.tool:
 			tool_anchor.drop()
 
-func jump() -> void:
+func jump(strength: float = 1) -> void:
 	movement_component.vector.y = -stats.jump_power
 	is_jumping = true
 

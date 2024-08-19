@@ -55,7 +55,8 @@ height = 14.0
 radius = 4.0
 
 [node name="Waterdrop" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "movement_component", "bounce_area", "reclaim_area")]
-collision_layer = 0
+z_index = 3
+collision_layer = 4
 script = ExtResource("1_3fpc7")
 state_machine = NodePath("StateMachine")
 stats = ExtResource("2_6nbvs")

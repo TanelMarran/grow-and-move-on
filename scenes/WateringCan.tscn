@@ -34,6 +34,7 @@ size = Vector2(14, 15)
 radius = 7.07107
 
 [node name="WateringCan" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "pickup_area", "sprite", "movement_component", "action_state")]
+z_index = 3
 collision_layer = 0
 script = ExtResource("1_wwgfk")
 state_machine = NodePath("StateMachine")

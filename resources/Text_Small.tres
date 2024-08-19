@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://v23p8xmfwjf8"]
+
+[ext_resource type="FontFile" uid="uid://dchevw1g7o7jv" path="res://fonts/Ubuntu-Title.ttf" id="1_1alku"]
+
+[resource]
+font = ExtResource("1_1alku")
+outline_size = 6
+outline_color = Color(0.129412, 0.235294, 0.447059, 1)
+shadow_size = 0

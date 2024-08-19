@@ -9,14 +9,31 @@ class_name Stem extends Line2D
 @export var platform_distance_min: Vector2 = Vector2.ONE * 16
 @export var platform_distance_max: Vector2 = Vector2.ONE * 32
 
+@export_group("Avoidance")
+@export_flags_2d_physics var avoidance_mask: int = 0
+@export var number_of_avoidance_rays: int = 9
+@export var avoidance_cone_angle: float = 90
+@export var avoidance_distance: float = 24
+@export var is_avoidance_active: bool = true
+
 var platforms: Array[Dictionary]
 
 var line_shapes: Array[SegmentShape2D]
 
 signal growth_finished
 
+var top_node: Node2D = null:
+	set(value):
+		top_node = value
+		top_node.reparent(self)
+		top_node.position = points[-1]
+
 func _ready() -> void:
 	line_shapes.append(collision_area.get_child(0).shape as SegmentShape2D)
+	is_avoidance_active = false
+	get_tree().create_timer(.5).timeout.connect(func():
+		is_avoidance_active = true
+	, CONNECT_ONE_SHOT)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -67,4 +84,42 @@ func add_new_shape(a: Vector2) -> void:
 		collision_shape.shape = segment_shape
 		collision_area.add_child(collision_shape)
 		line_shapes.append(segment_shape)
+
+func get_average_avoidance_point():
+	if !is_avoidance_active:
+		return null
+	
+	var world_space: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
+	var current_ray_angle: float = grower.direction - avoidance_cone_angle * .5
+	var ray_angle_step: float = deg_to_rad(avoidance_cone_angle / (number_of_avoidance_rays - 1))
+	var intersections: Array[Vector2] = []
+	
+	for i in range(number_of_avoidance_rays):
+		var params: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.new()
+		params.collide_with_areas = true
+		params.collide_with_bodies = false
+		params.collision_mask = avoidance_mask
+		params.from = global_position + points[-1] + Vector2.from_angle(grower.direction) * 4
+		params.to = params.from + Vector2.from_angle(current_ray_angle) * avoidance_distance
+		current_ray_angle += ray_angle_step
+		var result: Dictionary = world_space.intersect_ray(params)
+		if get_tree().debug_collisions_hint:
+			queue_redraw()
+		if result.has("position"):
+			intersections.append(result["position"])
+	
+	if intersections.size() > 0:
+		return intersections.reduce(func(a, b): return a + b) / intersections.size()
+	
+	return null
+
+func _draw() -> void:
+	if get_tree().debug_collisions_hint:
+		var current_ray_angle: float = grower.direction - deg_to_rad(avoidance_cone_angle * .5)
+		var ray_angle_step: float = deg_to_rad(avoidance_cone_angle / (number_of_avoidance_rays - 1))
 		
+		for i in range(number_of_avoidance_rays):
+			var from: Vector2 = points[-1] + Vector2.from_angle(grower.direction) * 4
+			var to: Vector2 = from + Vector2.from_angle(current_ray_angle) * avoidance_distance
+			current_ray_angle += ray_angle_step
+			draw_line(from, to, Color.RED, 1)

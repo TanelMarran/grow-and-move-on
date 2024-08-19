@@ -4,7 +4,7 @@ class_name EntitySprite2D extends AnimatedSprite2D
 @export var is_floating: bool = false
 @export var float_magnitude: float = 1
 @export var float_speed: float = 10
-var float_timer: float = 0
+var float_timer: float = randf() * 2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://sc7uuyaxbapl"]
+
+[ext_resource type="Texture2D" uid="uid://c5rheno3moigx" path="res://scenes/Maps/goal.png" id="1_dhyet"]
+[ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="2_xkkgk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adlqm"]
+atlas = ExtResource("1_dhyet")
+region = Rect2(0, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kll2"]
+atlas = ExtResource("1_dhyet")
+region = Rect2(23, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snq41"]
+atlas = ExtResource("1_dhyet")
+region = Rect2(0, 23, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v20s"]
+atlas = ExtResource("1_dhyet")
+region = Rect2(23, 23, 23, 23)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6wr4y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adlqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kll2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snq41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v20s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_whq6y"]
+radius = 14.0357
+
+[node name="Goal" type="Area2D"]
+
+[node name="EntitySprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_6wr4y")
+autoplay = "default"
+script = ExtResource("2_xkkgk")
+is_floating = true
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://aseprite/goal.aseprite"
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_whq6y")

@@ -24,7 +24,7 @@ point_frequency = 16.0
 resource_local_to_scene = true
 b = Vector2(0, 0)
 
-[node name="Stem" type="Line2D" node_paths=PackedStringArray("collision_area")]
+[node name="Stem" type="Line2D" node_paths=PackedStringArray("collision_area", "avoidance_raycast")]
 z_index = -1
 points = PackedVector2Array(0, 0, 0, 0)
 width = 24.0
@@ -36,9 +36,32 @@ end_cap_mode = 2
 script = ExtResource("1_1mb68")
 grower = SubResource("Resource_pt2gu")
 collision_area = NodePath("Area2D")
+avoidance_raycast = NodePath("Avoidance Rays")
 platform_scene = ExtResource("3_xwl02")
 platform_distance_max = Vector2(70, 33)
-avoidance_mask = 8
+
+[node name="Avoidance Rays" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="Avoidance Rays"]
+position = Vector2(0, -4)
+target_position = Vector2(0, -28)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="RayCast2D2" type="RayCast2D" parent="Avoidance Rays"]
+position = Vector2(1, -5)
+target_position = Vector2(16, -22)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="RayCast2D3" type="RayCast2D" parent="Avoidance Rays"]
+position = Vector2(-1, -5)
+target_position = Vector2(-16, -22)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 8
