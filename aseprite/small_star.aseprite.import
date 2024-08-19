@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cuo4d8qht81p5"
+path="res://.godot/imported/small_star.aseprite-5956cba209fcbe3d8c5fccd7d1c1203c.res"
+
+[deps]
+
+source_file="res://aseprite/small_star.aseprite"
+dest_files=["res://.godot/imported/small_star.aseprite-5956cba209fcbe3d8c5fccd7d1c1203c.res"]
+
+[params]
+

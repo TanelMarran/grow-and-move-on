@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://x7x4d5y7pwio"
+path="res://.godot/imported/ground_parallax.aseprite-eb4d8fb71e4b4ace1bae99f3e230693f.res"
+
+[deps]
+
+source_file="res://aseprite/ground_parallax.aseprite"
+dest_files=["res://.godot/imported/ground_parallax.aseprite-eb4d8fb71e4b4ace1bae99f3e230693f.res"]
+
+[params]
+

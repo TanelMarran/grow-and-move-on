@@ -187,3 +187,4 @@ script = ExtResource("6_obda2")
 
 [node name="Midair" type="Node" parent="StateMachine"]
 script = ExtResource("7_j8m7d")
+allow_jump = true

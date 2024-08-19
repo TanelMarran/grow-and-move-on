@@ -1,5 +1,7 @@
 extends State
 
+@export var allow_jump: bool = false
+
 var so: Player:
 	get:
 		if !so:
@@ -36,10 +38,13 @@ func state_physics_update(_delta: float) -> void:
 	so.movement_component.move_and_slide()
 	animations()
 	
-	if coyote_timer > 0 && Input.is_action_just_pressed("Jump") && !so.is_jumping:
+	if Input.is_action_just_pressed("Jump") && (coyote_timer > 0 && !so.is_jumping || allow_jump):
 		so.jump()
 	
 	so.regulate_jump()
+	
+	if so.is_on_ceiling():
+		so.movement_component.vector.y = max(0, so.movement_component.vector.y)
 	
 	if so.is_on_floor():
 		goto_state("Grounded")

@@ -1,38 +1,38 @@
 [gd_scene load_steps=9 format=3 uid="uid://sc7uuyaxbapl"]
 
-[ext_resource type="Texture2D" uid="uid://c5rheno3moigx" path="res://scenes/Maps/goal.png" id="1_dhyet"]
+[ext_resource type="Texture2D" uid="uid://cmtly3hvl2xn5" path="res://scenes/goal.png" id="1_a58el"]
 [ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="2_xkkgk"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_adlqm"]
-atlas = ExtResource("1_dhyet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1li0"]
+atlas = ExtResource("1_a58el")
 region = Rect2(0, 0, 23, 23)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5kll2"]
-atlas = ExtResource("1_dhyet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_u355w"]
+atlas = ExtResource("1_a58el")
 region = Rect2(23, 0, 23, 23)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_snq41"]
-atlas = ExtResource("1_dhyet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_dv7kj"]
+atlas = ExtResource("1_a58el")
 region = Rect2(0, 23, 23, 23)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3v20s"]
-atlas = ExtResource("1_dhyet")
+[sub_resource type="AtlasTexture" id="AtlasTexture_5o3c1"]
+atlas = ExtResource("1_a58el")
 region = Rect2(23, 23, 23, 23)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_6wr4y"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_kd0c0"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_adlqm")
+"texture": SubResource("AtlasTexture_n1li0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5kll2")
+"texture": SubResource("AtlasTexture_u355w")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_snq41")
+"texture": SubResource("AtlasTexture_dv7kj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3v20s")
+"texture": SubResource("AtlasTexture_5o3c1")
 }],
 "loop": true,
 "name": &"default",
@@ -46,7 +46,7 @@ radius = 14.0357
 
 [node name="EntitySprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_6wr4y")
+sprite_frames = SubResource("SpriteFrames_kd0c0")
 autoplay = "default"
 script = ExtResource("2_xkkgk")
 is_floating = true

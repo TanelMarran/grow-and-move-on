@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bnqyfcn270gv4"
+path="res://.godot/imported/cloudy_background.aseprite-472ad8e76da9941cae3fb1bfbe22bccb.res"
+
+[deps]
+
+source_file="res://aseprite/cloudy_background.aseprite"
+dest_files=["res://.godot/imported/cloudy_background.aseprite-472ad8e76da9941cae3fb1bfbe22bccb.res"]
+
+[params]
+

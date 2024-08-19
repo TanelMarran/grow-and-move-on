@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cgioorvwnyf7n"
+path="res://.godot/imported/bramble.aseprite-b14ea2dd40f59f85797ea849bf5b7ea4.res"
+
+[deps]
+
+source_file="res://aseprite/bramble.aseprite"
+dest_files=["res://.godot/imported/bramble.aseprite-b14ea2dd40f59f85797ea849bf5b7ea4.res"]
+
+[params]
+

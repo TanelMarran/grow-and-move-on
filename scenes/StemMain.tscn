@@ -17,7 +17,7 @@ dir_min = 315.0
 dir_max = 225.0
 rot_amount = 90.0
 rot_amount_variance = 0.0
-growth_speed = 50.0
+growth_speed = 200.0
 point_frequency = 16.0
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_pmclg"]
