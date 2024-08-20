@@ -1,0 +1,134 @@
+[gd_scene load_steps=17 format=3 uid="uid://cneyxm66be6hx"]
+
+[ext_resource type="Script" path="res://scripts/Tool.gd" id="1_jaqa2"]
+[ext_resource type="Texture2D" uid="uid://7yu3qw1r2tnh" path="res://aseprite/snippers.png" id="2_j1h0h"]
+[ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="3_ujscp"]
+[ext_resource type="Script" path="res://scripts/PickupArea.gd" id="4_mii3p"]
+[ext_resource type="Script" path="res://scripts/MovementComponent.gd" id="5_mrpfb"]
+[ext_resource type="Script" path="res://scripts/states/player/StatePlayerActionShear.gd" id="6_03d2v"]
+[ext_resource type="Script" path="res://scripts/states/StateMachine.gd" id="8_u4pps"]
+[ext_resource type="Script" path="res://scripts/states/StateToolIdle.gd" id="9_uu83j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6dy3"]
+atlas = ExtResource("2_j1h0h")
+region = Rect2(0, 0, 24, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cwlf"]
+atlas = ExtResource("2_j1h0h")
+region = Rect2(24, 0, 24, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4qvs"]
+atlas = ExtResource("2_j1h0h")
+region = Rect2(0, 20, 24, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0kykt"]
+atlas = ExtResource("2_j1h0h")
+region = Rect2(24, 20, 24, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ap01i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f6dy3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4cwlf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4qvs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0kykt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f6dy3")
+}],
+"loop": false,
+"name": &"snip",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ecx0"]
+size = Vector2(14, 13)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bi8ga"]
+radius = 7.07107
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k3p3i"]
+height = 38.0
+
+[node name="Shears" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "pickup_area", "sprite", "movement_component", "action_state", "shear_hitbox")]
+z_index = 3
+collision_layer = 0
+script = ExtResource("1_jaqa2")
+state_machine = NodePath("StateMachine")
+pickup_area = NodePath("PickupArea2D")
+sprite = NodePath("AnimatedSprite2D")
+movement_component = NodePath("MovementComponent")
+action_state = NodePath("Action")
+shear_hitbox = NodePath("Area2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 6
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_ap01i")
+script = ExtResource("3_ujscp")
+is_floating = true
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://aseprite",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://aseprite/snippers.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_6ecx0")
+
+[node name="PickupArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("4_mii3p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea2D"]
+visible = false
+shape = SubResource("CircleShape2D_bi8ga")
+debug_color = Color(0.756143, 0.416034, 0.498673, 0.42)
+
+[node name="MovementComponent" type="Node" parent="."]
+script = ExtResource("5_mrpfb")
+
+[node name="Action" type="Node" parent="." node_paths=PackedStringArray("tool")]
+script = ExtResource("6_03d2v")
+tool = NodePath("..")
+little_jump = false
+timer_exit = false
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("state_owner", "initial_state")]
+script = ExtResource("8_u4pps")
+state_owner = NodePath("..")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("9_uu83j")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 512
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-8, 1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_k3p3i")

@@ -4,10 +4,14 @@ class_name Stem extends Line2D
 @export var grower: Grower
 @export var collision_area: Area2D
 
-@export_group("Platform")
+@export_group("Platforms")
 @export var platform_scene: PackedScene
 @export var platform_distance: Vector2 = Vector2.ONE * 32
 @export var initial_platform_distance_factor: float = .5
+
+@export_group("Secondary spawn")
+@export var secondary_scene: PackedScene
+@export_range(0, 1, .01) var secondary_frequency: float = .1
 
 @export_group("Avoidance")
 @export_flags_2d_physics var avoidance_mask: int = 0
@@ -34,6 +38,12 @@ func _ready() -> void:
 	get_tree().create_timer(.5).timeout.connect(func():
 		is_avoidance_active = true
 	, CONNECT_ONE_SHOT)
+	
+func add_secondary_scene(spawn_position: Vector2) -> void:
+	if randf() <= secondary_frequency && secondary_scene:
+		var instance: Node2D = secondary_scene.instantiate()
+		instance.position = spawn_position
+		add_sibling(instance)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

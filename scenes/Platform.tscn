@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cktbri6i1m5d"]
+[gd_scene load_steps=9 format=3 uid="uid://cktbri6i1m5d"]
 
 [ext_resource type="Script" path="res://scripts/Platform.gd" id="1_5kqt3"]
 [ext_resource type="Texture2D" uid="uid://ceu2gthg62kp3" path="res://aseprite/Output/leaves.png" id="2_f7wxn"]
+[ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="3_bhpxe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32pap"]
 size = Vector2(18, 5.5)
@@ -37,7 +38,7 @@ animations = [{
 
 [node name="Platform" type="AnimatableBody2D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_5kqt3")
-sprite = NodePath("AnimatedSprite2D")
+sprite = NodePath("")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
@@ -49,6 +50,8 @@ one_way_collision = true
 z_index = 1
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_oqqe1")
+script = ExtResource("3_bhpxe")
+scale_in = true
 metadata/_aseprite_wizard_config_ = {
 "layer": "",
 "o_ex_p": "",

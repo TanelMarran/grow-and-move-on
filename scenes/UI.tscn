@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://bsxi0ycvs6w7m"]
+[gd_scene load_steps=18 format=3 uid="uid://bsxi0ycvs6w7m"]
 
 [ext_resource type="FontFile" uid="uid://dchevw1g7o7jv" path="res://fonts/Ubuntu-Title.ttf" id="1_1bb38"]
 [ext_resource type="Script" path="res://scripts/UserInterface.gd" id="1_01vnn"]
 [ext_resource type="Material" uid="uid://lgs6pvk8mvfc" path="res://resources/materials/UI_Text.tres" id="1_osarl"]
 [ext_resource type="Texture2D" uid="uid://seukfwocqir2" path="res://aseprite/ui_hand.png" id="3_61co6"]
+[ext_resource type="Script" path="res://scripts/FruitCounter.gd" id="3_a1igo"]
 [ext_resource type="Texture2D" uid="uid://cw226ev7chgkf" path="res://aseprite/ui_water.png" id="3_mn5pi"]
 [ext_resource type="LabelSettings" uid="uid://c3vnxitekgjkl" path="res://resources/Text_Button.tres" id="3_qnxo3"]
 [ext_resource type="Script" path="res://scenes/ResourceBar.gd" id="3_vohxc"]
@@ -12,6 +13,7 @@
 [ext_resource type="Shader" path="res://shaders/ToolUI.gdshader" id="4_k71wc"]
 [ext_resource type="Texture2D" uid="uid://cnn2qjk8vetnm" path="res://aseprite/tools.png" id="4_u0c7p"]
 [ext_resource type="Script" path="res://scripts/ToolDisplay.gd" id="4_wdyoq"]
+[ext_resource type="Texture2D" uid="uid://dnvem40b1cvk2" path="res://aseprite/ui_fruit.png" id="5_pqv7g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1ystl"]
 shader = ExtResource("4_k71wc")
@@ -40,11 +42,12 @@ corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 anti_aliasing = false
 
-[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("game_end_prompt", "water_bar", "tool_display")]
+[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("game_end_prompt", "water_bar", "tool_display", "fruit_counter")]
 script = ExtResource("1_01vnn")
-game_end_prompt = NodePath("MarginContainer/Game End Prompt")
+game_end_prompt = NodePath("MarginContainer2/Game End Prompt")
 water_bar = NodePath("MarginContainer/Info/WaterBar")
 tool_display = NodePath("MarginContainer/Info/ToolDisplay")
+fruit_counter = NodePath("MarginContainer/Fruit Counter")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 material = ExtResource("1_osarl")
@@ -57,6 +60,44 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
+
+[node name="Fruit Counter" type="HBoxContainer" parent="MarginContainer" node_paths=PackedStringArray("label")]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+alignment = 2
+script = ExtResource("3_a1igo")
+increase_speed = 6.0
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="MarginContainer/Fruit Counter"]
+use_parent_material = true
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("4_3g0an")
+vertical_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Fruit Counter"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("5_pqv7g")
+stretch_mode = 3
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://aseprite",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"slice": "",
+"source": "res://aseprite/ui_fruit.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
 
 [node name="Info" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -144,13 +185,25 @@ texture = ExtResource("4_1h6fr")
 layout_mode = 2
 texture = ExtResource("4_1h6fr")
 
-[node name="Game End Prompt" type="VBoxContainer" parent="MarginContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+material = ExtResource("1_osarl")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Game End Prompt" type="VBoxContainer" parent="MarginContainer2"]
 use_parent_material = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
-[node name="Move on?" type="Label" parent="MarginContainer/Game End Prompt"]
+[node name="Move on?" type="Label" parent="MarginContainer2/Game End Prompt"]
 texture_filter = 1
 use_parent_material = true
 layout_mode = 2
@@ -159,20 +212,20 @@ text = "move on?"
 label_settings = SubResource("LabelSettings_06njd")
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Game End Prompt"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/Game End Prompt"]
 use_parent_material = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/Game End Prompt/HBoxContainer"]
+[node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer2/Game End Prompt/HBoxContainer"]
 use_parent_material = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Z" type="Panel" parent="MarginContainer/Game End Prompt/HBoxContainer/VBoxContainer"]
+[node name="Z" type="Panel" parent="MarginContainer2/Game End Prompt/HBoxContainer/VBoxContainer"]
 use_parent_material = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
@@ -180,7 +233,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_u8yth")
 
-[node name="Label" type="Label" parent="MarginContainer/Game End Prompt/HBoxContainer/VBoxContainer/Z"]
+[node name="Label" type="Label" parent="MarginContainer2/Game End Prompt/HBoxContainer/VBoxContainer/Z"]
 texture_filter = 1
 use_parent_material = true
 layout_mode = 1
@@ -198,17 +251,17 @@ label_settings = ExtResource("3_qnxo3")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="MarginContainer/Game End Prompt/HBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer2/Game End Prompt/HBoxContainer/VBoxContainer"]
 use_parent_material = true
 layout_mode = 2
 text = "no"
 label_settings = ExtResource("4_3g0an")
 
-[node name="VBoxContainer2" type="HBoxContainer" parent="MarginContainer/Game End Prompt/HBoxContainer"]
+[node name="VBoxContainer2" type="HBoxContainer" parent="MarginContainer2/Game End Prompt/HBoxContainer"]
 use_parent_material = true
 layout_mode = 2
 
-[node name="Z" type="Panel" parent="MarginContainer/Game End Prompt/HBoxContainer/VBoxContainer2"]
+[node name="Z" type="Panel" parent="MarginContainer2/Game End Prompt/HBoxContainer/VBoxContainer2"]
 use_parent_material = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
@@ -216,7 +269,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_u8yth")
 
-[node name="Label" type="Label" parent="MarginContainer/Game End Prompt/HBoxContainer/VBoxContainer2/Z"]
+[node name="Label" type="Label" parent="MarginContainer2/Game End Prompt/HBoxContainer/VBoxContainer2/Z"]
 texture_filter = 1
 use_parent_material = true
 layout_mode = 1
@@ -236,7 +289,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 0
 
-[node name="Label" type="Label" parent="MarginContainer/Game End Prompt/HBoxContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="MarginContainer2/Game End Prompt/HBoxContainer/VBoxContainer2"]
 use_parent_material = true
 layout_mode = 2
 text = "yes"

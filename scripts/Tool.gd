@@ -5,6 +5,7 @@ class_name Tool extends CharacterBody2D
 @export var sprite: EntitySprite2D
 @export var movement_component: MovementComponent
 @export var action_state: State
+@export var shear_hitbox: Area2D
 
 signal tool_picked_up(player: Player)
 signal tool_dropped(player: Player)

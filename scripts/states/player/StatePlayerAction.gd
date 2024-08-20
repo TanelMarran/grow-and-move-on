@@ -1,6 +1,7 @@
 class_name StatePlayerAction extends State
 
 @export var little_jump: bool = true
+@export var timer_exit: bool = true
 
 var so: Player:
 	get:
@@ -31,9 +32,10 @@ func state_enter() -> void:
 	if little_jump:
 		so.movement_component.vector.y = min(-so.stats.jump_power * .5, so.movement_component.vector.y)
 	
-	get_tree().create_timer(.3).timeout.connect(func():
-		goto_state("Grounded" if so.is_on_floor() else "Midair")
-	, CONNECT_ONE_SHOT)
+	if timer_exit:
+		get_tree().create_timer(.3).timeout.connect(func():
+			goto_state("Grounded" if so.is_on_floor() else "Midair")
+		, CONNECT_ONE_SHOT)
 
 func state_exit() -> void:
 	so.tool_anchor.visible = false

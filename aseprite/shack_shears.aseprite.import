@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://h7kqyd0fxnwq"
+path="res://.godot/imported/shack_shears.aseprite-110cc16932ac000512d8223898c9536b.res"
+
+[deps]
+
+source_file="res://aseprite/shack_shears.aseprite"
+dest_files=["res://.godot/imported/shack_shears.aseprite-110cc16932ac000512d8223898c9536b.res"]
+
+[params]
+

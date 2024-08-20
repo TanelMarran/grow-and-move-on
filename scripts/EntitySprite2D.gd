@@ -1,5 +1,7 @@
 class_name EntitySprite2D extends AnimatedSprite2D
 
+@export var scale_in: bool = false
+
 @export_group("Flicker")
 @export var is_flickering: bool = false:
 	set(value):
@@ -10,7 +12,11 @@ class_name EntitySprite2D extends AnimatedSprite2D
 var _flicker_timer: float = randf() * PI
 
 @export_group("Wobble")
-@export var is_wobbling: bool = false
+@export var is_wobbling: bool = false:
+	set(value):
+		if !value && is_wobbling:
+			scale = Vector2.ONE
+		is_wobbling = value
 @export var wobble_intensity: float = .1
 @export var wobble_speed: float = 10
 var _wobble_timer: float = randf() * PI
@@ -23,7 +29,9 @@ var _float_timer: float = randf() * PI
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	if scale_in:
+		scale = Vector2.ZERO
+		create_tween().tween_property(self, "scale", Vector2.ONE, .5).set_trans(Tween.TRANS_BOUNCE)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -43,5 +51,3 @@ func _process(delta: float) -> void:
 		scale.x = 1 + wobble_amount
 		scale.y = 1 - wobble_amount
 		rotation = cos(_wobble_timer * wobble_speed * .9) * PI * .05
-	else:
-		scale = Vector2.ONE

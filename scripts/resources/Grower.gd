@@ -23,6 +23,7 @@ func add_point(stem: Stem, index1: int, index2: int) -> void:
 	var b: Vector2 = stem.points[index1]
 	if should_spawn_new_point(a, b):
 		stem.add_point(b, index2)
+		stem.add_secondary_scene(stem.position + b)
 		stem.add_new_shape(b)
 
 func update_avoidance_raycast_rotation(stem: Stem, direction: float) -> void:

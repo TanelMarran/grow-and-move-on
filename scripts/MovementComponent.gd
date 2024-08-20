@@ -4,8 +4,14 @@ class_name MovementComponent extends Node
 
 @export var is_sidescroller: bool = true
 
-var target_vector: Vector2 = Vector2(0, 0)
+var vector_scalar: float = 1
+
+var target_vector: Vector2 = Vector2(0, 0):
+	get:
+		return target_vector * vector_scalar
 var vector: Vector2 = target_vector:
+	get:
+		return vector * vector_scalar
 	set(value):
 		if is_sidescroller:
 			target_vector.y = value.y 

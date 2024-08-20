@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://diddw061dtm3m"]
+[gd_scene load_steps=8 format=3 uid="uid://diddw061dtm3m"]
 
 [ext_resource type="Script" path="res://scripts/Stem.gd" id="1_1mb68"]
 [ext_resource type="Script" path="res://scripts/resources/GrowerAngle.gd" id="2_w0mb3"]
 [ext_resource type="PackedScene" uid="uid://cktbri6i1m5d" path="res://scenes/Platform.tscn" id="3_xwl02"]
+[ext_resource type="PackedScene" uid="uid://bxnm2xc5rb5r4" path="res://bramble.tscn" id="4_a4ykw"]
 
 [sub_resource type="Curve" id="Curve_73lir"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.509006), 0.0, 0.0, 0, 0]
@@ -39,6 +40,8 @@ grower = SubResource("Resource_pt2gu")
 collision_area = NodePath("Area2D")
 platform_scene = ExtResource("3_xwl02")
 platform_distance = Vector2(70, 33)
+secondary_scene = ExtResource("4_a4ykw")
+secondary_frequency = 0.19
 avoidance_mask = 8
 
 [node name="Area2D" type="Area2D" parent="."]

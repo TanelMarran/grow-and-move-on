@@ -10,6 +10,7 @@ var is_showing_prompt: bool = false
 @export var wait_time: float = 1
 var _wait_timer: float
 
+var stored_tool_visibility: bool
 
 func get_state_owner() -> Variant:
 	return state_owner
@@ -18,6 +19,8 @@ func state_enter() -> void:
 	_wait_timer = wait_time
 	if so.player:
 		so.player.state_machine.active = false
+		stored_tool_visibility = so.player.tool_anchor.visible
+		so.player.tool_anchor.visible = false
 	is_showing_prompt = false
 	
 func state_exit() -> void:
@@ -43,6 +46,7 @@ func state_update(_delta: float) -> void:
 				so.player.movement_component.vector += so.movement_component.vector
 				so.player.state_machine.active = true
 				so.goal_area.monitoring = false
+				so.player.tool_anchor.visible = stored_tool_visibility
 				get_tree().create_timer(.5).timeout.connect(func():
 					so.goal_area.monitoring = true
 				, CONNECT_ONE_SHOT)

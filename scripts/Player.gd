@@ -8,6 +8,7 @@ class_name Player extends CharacterBody2D
 @export var stats: StatsPlayer
 @export var waterdrop_scene: PackedScene
 @export_range(0, 3, 1) var water_amount: int = 0
+@export var fruit_amount: int = 10
 
 const WATER_MAX: int = 3
 
@@ -16,6 +17,8 @@ var current_pickup: Node2D
 
 signal tool_dropped
 
+signal fruit_picked_up
+signal fruit_used(amount: int)
 signal water_reclaimed
 signal water_used
 
@@ -30,6 +33,10 @@ func _process(delta: float) -> void:
 func tool_action() -> void:
 	if Input.is_action_just_pressed("Action"):
 		state_machine.goto_state("Action")
+
+func pickup_fruit() -> void:
+	fruit_amount += 1
+	fruit_picked_up.emit()
 
 func pickup_action() -> void:
 	var has_pickups: bool = Global.valid_interactables.size() > 0

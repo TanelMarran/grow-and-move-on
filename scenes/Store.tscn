@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://djdlr8q5sv31g"]
+
+[ext_resource type="Texture2D" uid="uid://ci8ddygejl504" path="res://scenes/shop_display.png" id="1_d2nji"]
+[ext_resource type="Script" path="res://scripts/Store.gd" id="2_kh5tj"]
+[ext_resource type="Script" path="res://scripts/PickupArea.gd" id="2_lvapu"]
+[ext_resource type="PackedScene" uid="uid://tkpbi3ln3fcp" path="res://scenes/BlueFlower.tscn" id="3_2b5g5"]
+[ext_resource type="Script" path="res://scripts/resources/Lootpool.gd" id="4_40t41"]
+[ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="6_g203l"]
+
+[sub_resource type="Resource" id="Resource_66t7o"]
+script = ExtResource("4_40t41")
+weight = 1
+scenes = Array[PackedScene]([ExtResource("3_2b5g5")])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bq8xn"]
+size = Vector2(12, 18)
+
+[node name="Store" type="Sprite2D" node_paths=PackedStringArray("pickup_area", "seed_anchor")]
+texture_filter = 1
+texture = ExtResource("1_d2nji")
+script = ExtResource("2_kh5tj")
+pickup_area = NodePath("PickupArea")
+seed_anchor = NodePath("Node2D")
+lootpools = Array[ExtResource("4_40t41")]([SubResource("Resource_66t7o")])
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"slice": "",
+"source": "res://aseprite/shop_display.aseprite"
+}
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("2_lvapu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_bq8xn")
+
+[node name="Node2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+script = ExtResource("6_g203l")
+is_floating = true

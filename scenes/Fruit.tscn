@@ -1,0 +1,123 @@
+[gd_scene load_steps=16 format=3 uid="uid://b3dn1qrx2dwfg"]
+
+[ext_resource type="Texture2D" uid="uid://cbuciis8lua4l" path="res://aseprite/fruit_small.png" id="1_2dbc7"]
+[ext_resource type="Script" path="res://scripts/Fruit.gd" id="1_ciard"]
+[ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="2_x048p"]
+[ext_resource type="Script" path="res://scripts/MovementComponent.gd" id="4_8f6a0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x32ot"]
+radius = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nccax"]
+atlas = ExtResource("1_2dbc7")
+region = Rect2(0, 0, 9, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ruek"]
+atlas = ExtResource("1_2dbc7")
+region = Rect2(9, 0, 9, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ed3s"]
+atlas = ExtResource("1_2dbc7")
+region = Rect2(18, 0, 9, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ol3yr"]
+atlas = ExtResource("1_2dbc7")
+region = Rect2(0, 8, 9, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2v8k"]
+atlas = ExtResource("1_2dbc7")
+region = Rect2(9, 8, 9, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sgta"]
+atlas = ExtResource("1_2dbc7")
+region = Rect2(18, 8, 9, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ao7xb"]
+atlas = ExtResource("1_2dbc7")
+region = Rect2(0, 16, 9, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvcxh"]
+atlas = ExtResource("1_2dbc7")
+region = Rect2(9, 16, 9, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6n225"]
+atlas = ExtResource("1_2dbc7")
+region = Rect2(18, 16, 9, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_33r1o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nccax")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ruek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ed3s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ol3yr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2v8k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6sgta")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ao7xb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rvcxh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6n225")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Fruit" type="CharacterBody2D" node_paths=PackedStringArray("claim_area", "movement_component")]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_ciard")
+claim_area = NodePath("Area2D")
+movement_component = NodePath("MovementComponent")
+deactive_time = 0.5
+deactive_time_variance = 0.2
+restitution = 1100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_x32ot")
+
+[node name="EntitySprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_33r1o")
+script = ExtResource("2_x048p")
+is_wobbling = true
+is_floating = true
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://aseprite",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://aseprite/fruit_small.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_x32ot")
+
+[node name="MovementComponent" type="Node" parent="."]
+script = ExtResource("4_8f6a0")
+is_sidescroller = false

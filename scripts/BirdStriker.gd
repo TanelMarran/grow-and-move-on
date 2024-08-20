@@ -1,6 +1,7 @@
 extends Node2D
 
-@export var frequency: float = 60 * 3
+@export_range(0, 100, 1.1) var chance_of_fruit: float = 33
+@export var frequency: float = 60 * 2
 @export var frequency_variance: float = 30
 @export var birds: Array[Bird]
 @export var loot_pools: Array[Lootpool]
@@ -22,7 +23,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	_birdstrike_timer -= delta
 	if _birdstrike_timer <= 0:
 		birdstrike()
@@ -35,14 +36,16 @@ func birdstrike() -> void:
 	var player: Player = Global.player
 	var random_y_min: float = max(birdstrike_y_min, player.global_position.y - BIRDSTRIKE_HEIGHT)
 	var random_y_max: float = min(birdstrike_y_max, player.global_position.y + BIRDSTRIKE_HEIGHT)
+	var with_fruit: bool = randf() * 100 < chance_of_fruit
 	if random_y_min < random_y_max:
 		var random_y: float = random_y_min + randf() * (random_y_max - random_y_min)
 		var random_x: float = get_random_drop_x(random_y)
-		var random_item: PackedScene = Lootpool.select_random_scene(loot_pools)
+		var random_item: PackedScene = Lootpool.select_random_scene(loot_pools) if with_fruit else null
 		
 		for bird in birds:
 			if !bird.is_flying():
-				bird.hold_seed(random_item.instantiate() as Seed)
+				if random_item:
+					bird.hold_seed(random_item.instantiate() as Seed)
 				bird.fly_and_drop(Vector2(random_x, random_y), randf() > .5)
 				break
 

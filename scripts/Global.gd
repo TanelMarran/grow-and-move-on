@@ -29,6 +29,13 @@ func _ready_deferred() -> void:
 	player.tool_anchor.tool_dropped.connect(func(tool: Node2D):
 		user_interface.tool_display.set_tool_texture(null)
 	)
+	
+	player.fruit_picked_up.connect(func():
+		user_interface.fruit_counter.target_fruit += 1
+	)
+	player.fruit_used.connect(func(amount: int):
+		user_interface.fruit_counter.target_fruit -= amount
+	)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

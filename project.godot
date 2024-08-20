@@ -79,6 +79,7 @@ Interact={
 2d_physics/layer_3="Bubble"
 2d_physics/layer_4="Stem"
 2d_physics/layer_9="hard_walls"
+2d_physics/layer_10="Bramble"
 
 [rendering]
 
