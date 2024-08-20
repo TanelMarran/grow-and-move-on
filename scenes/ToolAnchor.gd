@@ -30,7 +30,7 @@ func pickup(node: Node2D, sprite: AnimatedSprite2D, dropped_callback: Callable, 
 	tool = node
 	tool_sprite = sprite
 	tool_dropped.connect(dropped_callback, CONNECT_ONE_SHOT)
-	tool_picked_up.emit(tool)
+	tool_picked_up.emit(tool, sprite)
 
 func drop() -> void:
 	tool.position = get_owner().position + Vector2.UP * 8

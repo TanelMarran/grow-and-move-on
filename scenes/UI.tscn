@@ -1,13 +1,25 @@
-[gd_scene load_steps=11 format=3 uid="uid://bsxi0ycvs6w7m"]
+[gd_scene load_steps=16 format=3 uid="uid://bsxi0ycvs6w7m"]
 
 [ext_resource type="FontFile" uid="uid://dchevw1g7o7jv" path="res://fonts/Ubuntu-Title.ttf" id="1_1bb38"]
 [ext_resource type="Script" path="res://scripts/UserInterface.gd" id="1_01vnn"]
 [ext_resource type="Material" uid="uid://lgs6pvk8mvfc" path="res://resources/materials/UI_Text.tres" id="1_osarl"]
+[ext_resource type="Texture2D" uid="uid://seukfwocqir2" path="res://aseprite/ui_hand.png" id="3_61co6"]
 [ext_resource type="Texture2D" uid="uid://cw226ev7chgkf" path="res://aseprite/ui_water.png" id="3_mn5pi"]
 [ext_resource type="LabelSettings" uid="uid://c3vnxitekgjkl" path="res://resources/Text_Button.tres" id="3_qnxo3"]
 [ext_resource type="Script" path="res://scenes/ResourceBar.gd" id="3_vohxc"]
 [ext_resource type="Texture2D" uid="uid://c8ggv0yre1s14" path="res://aseprite/ui_water_empty.png" id="4_1h6fr"]
 [ext_resource type="LabelSettings" uid="uid://v23p8xmfwjf8" path="res://resources/Text_Small.tres" id="4_3g0an"]
+[ext_resource type="Shader" path="res://shaders/ToolUI.gdshader" id="4_k71wc"]
+[ext_resource type="Texture2D" uid="uid://cnn2qjk8vetnm" path="res://aseprite/tools.png" id="4_u0c7p"]
+[ext_resource type="Script" path="res://scripts/ToolDisplay.gd" id="4_wdyoq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ystl"]
+shader = ExtResource("4_k71wc")
+shader_parameter/color = Color(0.129412, 0.231373, 0.447059, 1)
+shader_parameter/width = 2.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
 
 [sub_resource type="LabelSettings" id="LabelSettings_06njd"]
 font = ExtResource("1_1bb38")
@@ -28,10 +40,11 @@ corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 anti_aliasing = false
 
-[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("game_end_prompt", "water_bar")]
+[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("game_end_prompt", "water_bar", "tool_display")]
 script = ExtResource("1_01vnn")
 game_end_prompt = NodePath("MarginContainer/Game End Prompt")
 water_bar = NodePath("MarginContainer/Info/WaterBar")
+tool_display = NodePath("MarginContainer/Info/ToolDisplay")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 material = ExtResource("1_osarl")
@@ -49,6 +62,69 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
+
+[node name="ToolDisplay" type="TextureRect" parent="MarginContainer/Info" node_paths=PackedStringArray("tool_texture_rect")]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_61co6")
+script = ExtResource("4_wdyoq")
+tool_texture_rect = NodePath("Control/TextureRect")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://aseprite",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"slice": "",
+"source": "res://aseprite/ui_hand.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
+
+[node name="Control" type="Control" parent="MarginContainer/Info/ToolDisplay"]
+anchors_preset = 0
+offset_left = 22.0
+offset_top = 3.0
+offset_right = 23.0
+offset_bottom = 4.0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Info/ToolDisplay/Control"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_1ystl")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.5
+offset_top = -20.5
+offset_right = 21.5
+offset_bottom = 19.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_u0c7p")
+expand_mode = 4
+stretch_mode = 3
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://aseprite",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"slice": "",
+"source": "res://aseprite/tools.aseprite"
+}
+metadata/_aseprite_wizard_interface_config_ = {
+"output_section": true
+}
 
 [node name="WaterBar" type="HBoxContainer" parent="MarginContainer/Info"]
 layout_mode = 2

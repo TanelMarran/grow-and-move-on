@@ -21,6 +21,14 @@ func _ready_deferred() -> void:
 	player.water_used.connect(func():
 		user_interface.water_bar.amount_filled -= 1
 	)
+	
+	user_interface.tool_display.set_tool_texture(null)
+	player.tool_anchor.tool_picked_up.connect(func(tool: Node2D, sprite: AnimatedSprite2D):
+		user_interface.tool_display.set_tool_texture(sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame))
+	)
+	player.tool_anchor.tool_dropped.connect(func(tool: Node2D):
+		user_interface.tool_display.set_tool_texture(null)
+	)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

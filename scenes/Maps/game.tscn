@@ -327,3 +327,6 @@ birdstrike_ground_ray_density = 9.0
 birdstrike_ground_ray_length = 150.0
 
 [node name="Shack" parent="." instance=ExtResource("27_1va6v")]
+
+[node name="BlueFlower2" parent="." instance=ExtResource("4_l13gs")]
+position = Vector2(91, -40)

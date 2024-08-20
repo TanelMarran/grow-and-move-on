@@ -8,13 +8,9 @@ var is_tool_picked_up: bool = false:
 	set(value):
 		is_tool_picked_up = value
 		pickup_area.is_interactable = !is_tool_picked_up
-		print(!is_tool_picked_up)
 
 func _ready() -> void:
 	pickup_area.picked_up.connect(on_player_pickup)
-	
-func _process(delta: float) -> void:
-	pass #print(pickup_area.is_interactable)
 	
 func on_player_pickup(player: Player) -> void:
 	if !tool:
