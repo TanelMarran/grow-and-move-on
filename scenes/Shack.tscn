@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://d2f03etb2pxk0"]
+
+[ext_resource type="Texture2D" uid="uid://bai1tlptr2nva" path="res://scenes/Maps/shack.png" id="1_hn8v3"]
+[ext_resource type="Script" path="res://scripts/PickupArea.gd" id="2_gvrw8"]
+[ext_resource type="Script" path="res://scripts/Shack.gd" id="2_l2bno"]
+[ext_resource type="PackedScene" uid="uid://cglse52u304q5" path="res://scenes/WateringCan.tscn" id="3_8r2c1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4s066"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tslq"]
+size = Vector2(31, 2)
+
+[node name="Shack" type="Sprite2D" node_paths=PackedStringArray("pickup_area")]
+texture_filter = 1
+position = Vector2(-149, -30)
+texture = ExtResource("1_hn8v3")
+flip_h = true
+script = ExtResource("2_l2bno")
+pickup_area = NodePath("PickupArea")
+tool_scene = ExtResource("3_8r2c1")
+metadata/_aseprite_wizard_config_ = {
+"i_mode": 1,
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"slice": "",
+"source": "res://aseprite/shack.aseprite"
+}
+
+[node name="PickupArea" type="Area2D" parent="."]
+position = Vector2(11, 12)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("2_gvrw8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2(-3, 0)
+shape = SubResource("RectangleShape2D_4s066")
+debug_color = Color(0.653101, 0.132603, 0.247529, 0.42)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_8tslq")
+one_way_collision = true

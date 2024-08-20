@@ -6,6 +6,9 @@ class_name Tool extends CharacterBody2D
 @export var movement_component: MovementComponent
 @export var action_state: State
 
+signal tool_picked_up(player: Player)
+signal tool_dropped(player: Player)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pickup_area.picked_up.connect(picked_up)
@@ -24,6 +27,7 @@ func picked_up(player: Player) -> void:
 	sprite.is_floating = false
 	pickup_area.is_interactable = false
 	state_machine.active = false
+	tool_picked_up.emit(player)
 	
 func dropped(player: Player) -> void:
 	player.state_machine.remove_state(action_state)
@@ -31,3 +35,4 @@ func dropped(player: Player) -> void:
 	pickup_area.is_interactable = true
 	sprite.is_floating = true
 	state_machine.active = true
+	tool_dropped.emit(player)

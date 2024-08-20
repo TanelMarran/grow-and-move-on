@@ -4,6 +4,7 @@ class_name Player extends CharacterBody2D
 @export var tool_anchor: ToolAnchor
 @export var state_machine: StateMachine
 @export var sprite: EntitySprite2D
+@export var alert_sprite: EntitySprite2D
 @export var stats: StatsPlayer
 @export var waterdrop_scene: PackedScene
 @export_range(0, 3, 1) var water_amount: int = 0
@@ -31,8 +32,12 @@ func tool_action() -> void:
 		state_machine.goto_state("Action")
 
 func pickup_action() -> void:
+	var has_pickups: bool = Global.valid_interactables.size() > 0
+	
+	alert_sprite.modulate.a = 1 if has_pickups else 0
+	
 	if Input.is_action_just_pressed("Interact"):
-		if Global.valid_interactables.size() > 0:
+		if has_pickups:
 			Global.valid_interactables[0].pickup()
 		elif tool_anchor.tool:
 			tool_anchor.drop()

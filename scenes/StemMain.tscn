@@ -38,7 +38,7 @@ growth_left = 240.0
 grower = SubResource("Resource_pt2gu")
 collision_area = NodePath("Area2D")
 platform_scene = ExtResource("3_xwl02")
-platform_distance_max = Vector2(70, 33)
+platform_distance = Vector2(70, 33)
 avoidance_mask = 8
 
 [node name="Area2D" type="Area2D" parent="."]

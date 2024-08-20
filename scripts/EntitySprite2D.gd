@@ -1,7 +1,11 @@
 class_name EntitySprite2D extends AnimatedSprite2D
 
 @export_group("Flicker")
-@export var is_flickering: bool = false
+@export var is_flickering: bool = false:
+	set(value):
+		if !value && is_flickering:
+			modulate.a = 1
+		is_flickering = value
 @export var flicker_intensity: float = .05
 var _flicker_timer: float = randf() * PI
 
@@ -32,8 +36,6 @@ func _process(delta: float) -> void:
 	if is_flickering:
 		_flicker_timer += delta
 		modulate.a = 0 if int(_flicker_timer / flicker_intensity) % 2 == 0 else 1
-	else:
-		modulate.a = 1
 		
 	if is_wobbling:
 		_wobble_timer += delta

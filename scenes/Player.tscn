@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cvm32qrncwvj3"]
+[gd_scene load_steps=35 format=3 uid="uid://cvm32qrncwvj3"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qvaeg"]
 [ext_resource type="Resource" uid="uid://ivgfdch4tfr3" path="res://resources/StatsPlayer.tres" id="2_vaqgg"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="5_l2nxk"]
 [ext_resource type="Script" path="res://scripts/states/player/StatePlayerGrounded.gd" id="6_obda2"]
 [ext_resource type="Script" path="res://scripts/states/player/StatePlayerMidair.gd" id="7_j8m7d"]
+[ext_resource type="Texture2D" uid="uid://b7whsqmo15hmo" path="res://scenes/alert.png" id="11_yboy7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dat33"]
 size = Vector2(13, 15)
@@ -193,7 +194,22 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "tool_anchor", "state_machine", "sprite") groups=["Player"]]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulhsq"]
+atlas = ExtResource("11_yboy7")
+region = Rect2(0, 0, 10, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0yd0t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ulhsq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("movement_component", "tool_anchor", "state_machine", "sprite", "alert_sprite") groups=["Player"]]
 z_index = 1
 collision_layer = 2
 safe_margin = 0.16
@@ -202,6 +218,7 @@ movement_component = NodePath("MovementComponent")
 tool_anchor = NodePath("ToolAnchor")
 state_machine = NodePath("StateMachine")
 sprite = NodePath("AnimatedSprite2D")
+alert_sprite = NodePath("EntitySprite2D")
 stats = ExtResource("2_vaqgg")
 waterdrop_scene = ExtResource("3_msi0m")
 water_amount = 2
@@ -251,3 +268,21 @@ script = ExtResource("6_obda2")
 [node name="Midair" type="Node" parent="StateMachine"]
 script = ExtResource("7_j8m7d")
 allow_jump = true
+
+[node name="EntitySprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 4
+texture_filter = 1
+position = Vector2(0, -23)
+sprite_frames = SubResource("SpriteFrames_0yd0t")
+script = ExtResource("5_l2nxk")
+is_floating = true
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://aseprite/alert.aseprite"
+}

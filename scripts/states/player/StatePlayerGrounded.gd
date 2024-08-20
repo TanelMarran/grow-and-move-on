@@ -10,7 +10,7 @@ func state_enter() -> void:
 	pass
 	
 func state_exit() -> void:
-	pass
+	so.alert_sprite.modulate.a = 0
 	
 func state_update(_delta: float) -> void:
 	so.tool_action()

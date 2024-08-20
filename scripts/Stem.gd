@@ -6,8 +6,8 @@ class_name Stem extends Line2D
 
 @export_group("Platform")
 @export var platform_scene: PackedScene
-@export var platform_distance_min: Vector2 = Vector2.ONE * 16
-@export var platform_distance_max: Vector2 = Vector2.ONE * 32
+@export var platform_distance: Vector2 = Vector2.ONE * 32
+@export var initial_platform_distance_factor: float = .5
 
 @export_group("Avoidance")
 @export_flags_2d_physics var avoidance_mask: int = 0
@@ -60,8 +60,9 @@ func get_last_platform_position() -> Vector2:
 func spawn_platforms() -> void:
 	var last_platform_position: Vector2 = get_last_platform_position()
 	var diff_to_last_platform: Vector2 = last_platform_position - points[-1]
+	var distance_required: Vector2 = platform_distance * (initial_platform_distance_factor if platforms.size() == 0 else 1)
 	
-	if abs(diff_to_last_platform.x) > platform_distance_max.x || abs(diff_to_last_platform.y) > platform_distance_max.y && growth_left > platform_distance_max.length() * .5:
+	if abs(diff_to_last_platform.x) > distance_required.x || abs(diff_to_last_platform.y) > distance_required.y && growth_left > distance_required.length() * .5:
 		spawn_platform(points[-1], points.size() - 1)
 
 func spawn_platform(platform_position, index):

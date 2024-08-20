@@ -22,6 +22,7 @@ func state_enter() -> void:
 	
 func state_exit() -> void:
 	so.movement_component.acceleration_factor = 1
+	so.alert_sprite.modulate.a = 0
 	
 func state_update(_delta: float) -> void:
 	if coyote_timer > 0:

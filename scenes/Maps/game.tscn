@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://cwdqwx5paa31k"]
+[gd_scene load_steps=36 format=4 uid="uid://cwdqwx5paa31k"]
 
 [ext_resource type="Script" path="res://scripts/CloudBarrier.gd" id="1_bmlw7"]
 [ext_resource type="Script" path="res://scenes/Maps/RainSpawner.gd" id="1_i5tml"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dq8bubbl7hy30" path="res://tilesets/ground.png" id="2_ayryw"]
 [ext_resource type="PackedScene" uid="uid://c6602e3qsscm1" path="res://scenes/waterdrop.tscn" id="2_kcwvo"]
 [ext_resource type="PackedScene" uid="uid://tkpbi3ln3fcp" path="res://scenes/BlueFlower.tscn" id="4_l13gs"]
-[ext_resource type="PackedScene" uid="uid://cglse52u304q5" path="res://scenes/WateringCan.tscn" id="5_vxjys"]
 [ext_resource type="Texture2D" uid="uid://dheal412mk3cc" path="res://aseprite/sky_sky.png" id="6_7s2oy"]
 [ext_resource type="Texture2D" uid="uid://bsqd538r52a7l" path="res://aseprite/sky_clouds_3.png" id="7_0tm38"]
 [ext_resource type="PackedScene" uid="uid://sc7uuyaxbapl" path="res://scenes/Goal.tscn" id="7_2h6l0"]
@@ -26,7 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://bbc6s3x3ddx5l" path="res://scenes/Bird.tscn" id="24_csbrm"]
 [ext_resource type="Script" path="res://scripts/BirdStriker.gd" id="25_focxn"]
 [ext_resource type="Script" path="res://scripts/resources/Lootpool.gd" id="26_muh58"]
-[ext_resource type="Texture2D" uid="uid://ddbb6g7132icu" path="res://aseprite/shack.png" id="26_tqni6"]
+[ext_resource type="PackedScene" uid="uid://d2f03etb2pxk0" path="res://scenes/Shack.tscn" id="27_1va6v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8i16x"]
 size = Vector2(347, 176)
@@ -67,9 +66,6 @@ point_count = 2
 script = ExtResource("26_muh58")
 weight = 1
 scenes = Array[PackedScene]([ExtResource("4_l13gs")])
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tslq"]
-size = Vector2(31, 2)
 
 [node name="World" type="Node2D"]
 
@@ -225,9 +221,6 @@ tile_set = SubResource("TileSet_pckk4")
 position = Vector2(0, -9)
 start_as_bulb = true
 
-[node name="WateringCan" parent="." instance=ExtResource("5_vxjys")]
-position = Vector2(-147, -57)
-
 [node name="Goal" parent="." instance=ExtResource("7_2h6l0")]
 position = Vector2(0, -897)
 
@@ -333,15 +326,4 @@ loot_pools = Array[ExtResource("26_muh58")]([SubResource("Resource_o2bm2")])
 birdstrike_ground_ray_density = 9.0
 birdstrike_ground_ray_length = 150.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-149, -30)
-texture = ExtResource("26_tqni6")
-flip_h = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D"]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/StaticBody2D"]
-position = Vector2(0, -12)
-shape = SubResource("RectangleShape2D_8tslq")
-one_way_collision = true
+[node name="Shack" parent="." instance=ExtResource("27_1va6v")]
