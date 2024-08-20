@@ -61,7 +61,7 @@ func spawn_platforms() -> void:
 	var last_platform_position: Vector2 = get_last_platform_position()
 	var diff_to_last_platform: Vector2 = last_platform_position - points[-1]
 	
-	if abs(diff_to_last_platform.x) > platform_distance_max.x || abs(diff_to_last_platform.y) > platform_distance_max.y:
+	if abs(diff_to_last_platform.x) > platform_distance_max.x || abs(diff_to_last_platform.y) > platform_distance_max.y && growth_left > platform_distance_max.length() * .5:
 		spawn_platform(points[-1], points.size() - 1)
 
 func spawn_platform(platform_position, index):

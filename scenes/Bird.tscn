@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://bbc6s3x3ddx5l"]
+
+[ext_resource type="Script" path="res://scripts/Bird.gd" id="1_u6euw"]
+[ext_resource type="Texture2D" uid="uid://dlpm3cmtkkfka" path="res://scenes/Maps/bird.png" id="2_kbk8l"]
+[ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="3_716q6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u1ge1"]
+size = Vector2(12, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e56hk"]
+atlas = ExtResource("2_kbk8l")
+region = Rect2(0, 0, 27, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c4mwu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e56hk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Bird" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "held_seed_anchor")]
+collision_mask = 0
+script = ExtResource("1_u6euw")
+sprite = NodePath("EntitySprite2D")
+held_seed_anchor = NodePath("Node2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_u1ge1")
+one_way_collision = true
+
+[node name="EntitySprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 4
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_c4mwu")
+script = ExtResource("3_716q6")
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"slice": "",
+"source": "res://aseprite/bird.aseprite"
+}
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(0, 8)

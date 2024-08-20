@@ -42,5 +42,4 @@ func after_ready() -> void:
 	pass
 
 func on_body_entered(node: Node2D) -> void:
-	print(node)
 	so.reclaim(node)

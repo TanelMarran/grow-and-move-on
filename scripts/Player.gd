@@ -3,7 +3,7 @@ class_name Player extends CharacterBody2D
 @export var movement_component: MovementComponent
 @export var tool_anchor: ToolAnchor
 @export var state_machine: StateMachine
-@export var sprite: AnimatedSprite2D
+@export var sprite: EntitySprite2D
 @export var stats: StatsPlayer
 @export var waterdrop_scene: PackedScene
 @export_range(0, 3, 1) var water_amount: int = 0

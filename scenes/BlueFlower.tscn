@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://tkpbi3ln3fcp"]
+[gd_scene load_steps=21 format=3 uid="uid://tkpbi3ln3fcp"]
 
 [ext_resource type="Script" path="res://scripts/Seed.gd" id="1_3g0n5"]
 [ext_resource type="Texture2D" uid="uid://dh654cwsa1ls6" path="res://scenes/blue_flower.png" id="2_4tbxr"]
@@ -12,23 +12,37 @@
 [ext_resource type="Script" path="res://scripts/states/StateSeedIdle.gd" id="8_1re11"]
 [ext_resource type="PackedScene" uid="uid://diddw061dtm3m" path="res://scenes/StemMain.tscn" id="11_sl0bj"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nc043"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_i2lxn"]
 atlas = ExtResource("2_4tbxr")
-region = Rect2(20, 0, 20, 20)
+region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c5ip8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ofqlv"]
 atlas = ExtResource("2_4tbxr")
-region = Rect2(0, 20, 20, 20)
+region = Rect2(48, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kh0a2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtpyy"]
 atlas = ExtResource("2_4tbxr")
-region = Rect2(0, 0, 20, 20)
+region = Rect2(0, 24, 24, 24)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_qbioo"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qsegl"]
+atlas = ExtResource("2_4tbxr")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udw8e"]
+atlas = ExtResource("2_4tbxr")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5ff22"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nc043")
+"texture": SubResource("AtlasTexture_i2lxn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ofqlv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtpyy")
 }],
 "loop": true,
 "name": &"bulb",
@@ -36,7 +50,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c5ip8")
+"texture": SubResource("AtlasTexture_qsegl")
 }],
 "loop": true,
 "name": &"flower",
@@ -44,7 +58,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kh0a2")
+"texture": SubResource("AtlasTexture_udw8e")
 }],
 "loop": true,
 "name": &"seed",
@@ -73,8 +87,9 @@ movement_component = NodePath("MovementComponent")
 action_state = NodePath("Action")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 2
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_qbioo")
+sprite_frames = SubResource("SpriteFrames_5ff22")
 animation = &"seed"
 script = ExtResource("3_88c3m")
 is_floating = true

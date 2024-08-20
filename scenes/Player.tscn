@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cvm32qrncwvj3"]
+[gd_scene load_steps=32 format=3 uid="uid://cvm32qrncwvj3"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_qvaeg"]
 [ext_resource type="Resource" uid="uid://ivgfdch4tfr3" path="res://resources/StatsPlayer.tres" id="2_vaqgg"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scenes/ToolAnchor.gd" id="4_wx4u1"]
 [ext_resource type="Script" path="res://scripts/MovementComponent.gd" id="4_yprdr"]
 [ext_resource type="Script" path="res://scripts/states/StateMachine.gd" id="5_5o65l"]
+[ext_resource type="Script" path="res://scripts/EntitySprite2D.gd" id="5_l2nxk"]
 [ext_resource type="Script" path="res://scripts/states/player/StatePlayerGrounded.gd" id="6_obda2"]
 [ext_resource type="Script" path="res://scripts/states/player/StatePlayerMidair.gd" id="7_j8m7d"]
 
@@ -210,10 +211,12 @@ position = Vector2(0, -7.5)
 shape = SubResource("RectangleShape2D_dat33")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 3
 texture_filter = 1
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_jby7b")
 animation = &"goal_wave"
+script = ExtResource("5_l2nxk")
 metadata/_aseprite_wizard_config_ = {
 "layer": "",
 "o_ex_p": "",

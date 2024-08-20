@@ -9,6 +9,10 @@ class_name Seed extends CharacterBody2D
 @export var action_state: State
 @export var start_as_bulb: bool = false
 
+@export_group("Bulb")
+@export var stage_duration: float = 10
+@onready var _number_of_stages: int = sprite.sprite_frames.get_frame_count("bulb")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pickup_area.picked_up.connect(picked_up)
